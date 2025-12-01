@@ -38,6 +38,11 @@ namespace BookCollection
             ageMaskedTextBox = new MaskedTextBox();
             employeeIdMaskedTextBox = new MaskedTextBox();
             payMaskedTextBox = new MaskedTextBox();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
             SuspendLayout();
             // 
             // exitButton
@@ -111,11 +116,61 @@ namespace BookCollection
             payMaskedTextBox.Size = new Size(218, 27);
             payMaskedTextBox.TabIndex = 23;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(33, 15);
+            label1.Name = "label1";
+            label1.Size = new Size(52, 20);
+            label1.TabIndex = 24;
+            label1.Text = "Name:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(58, 48);
+            label2.Name = "label2";
+            label2.Size = new Size(27, 20);
+            label2.TabIndex = 25;
+            label2.Text = "ID:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(51, 81);
+            label3.Name = "label3";
+            label3.Size = new Size(34, 20);
+            label3.TabIndex = 26;
+            label3.Text = "Pay:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(18, 115);
+            label4.Name = "label4";
+            label4.Size = new Size(67, 20);
+            label4.TabIndex = 27;
+            label4.Text = "Birthday:";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(46, 146);
+            label5.Name = "label5";
+            label5.Size = new Size(39, 20);
+            label5.TabIndex = 28;
+            label5.Text = "Age:";
+            // 
             // FormAddEmployee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(318, 244);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(payMaskedTextBox);
             Controls.Add(employeeIdMaskedTextBox);
             Controls.Add(ageMaskedTextBox);
@@ -141,5 +196,10 @@ namespace BookCollection
         private MaskedTextBox ageMaskedTextBox;
         private MaskedTextBox employeeIdMaskedTextBox;
         private MaskedTextBox payMaskedTextBox;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label label5;
     }
 }
