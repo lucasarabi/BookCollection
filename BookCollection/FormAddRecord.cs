@@ -75,23 +75,9 @@ namespace BookCollection
             $"Genre: {genreTextBox.Text}\n" +
             $"Book Type: {bookTypeTextBox.Text}");
 
-            var result = 0;
+            this.Close();
 
-            Book newBook = new Book
-            {
-                Title = titleTextBox.Text,
-                ISBN = isbnTextBox.Text,
-                Author = authorTextBox.Text,
-                PublishDate = DateTime.Parse(pubDateTextBox.Text),
-                DateAdded = DateTime.Parse(dateAddedTextBox.Text),
-                Publisher = publisherTextBox.Text,
-                NumOfPages = int.Parse(numPagesTextBox.Text),
-                BookID = bookIDTextBox.Text,
-                Price = decimal.Parse(priceTextBox.Text),
-                Genre = genreTextBox.Text,
-                BookType = bookTypeTextBox.Text,
-                quantity = int.Parse(quantTextBox.Text)
-            };
+            
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {

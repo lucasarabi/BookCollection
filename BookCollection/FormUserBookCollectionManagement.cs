@@ -29,17 +29,18 @@ namespace BookCollection
 
         private void viewCartBtn_Click(object sender, EventArgs e)
         {
-            // View Cart caca
+            FormShoppingCart shoppingCart = new FormShoppingCart();
+            shoppingCart.ShowDialog();
         }
 
         private void addToCartBtn_Click(object sender, EventArgs e)
         {
-            // Add Stuff Caca
+            
         }
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            // Query Caca
+            
         }
 
         private void adminButton_Click(object sender, EventArgs e)

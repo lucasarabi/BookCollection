@@ -80,6 +80,7 @@
             btnCheckout.TabIndex = 9;
             btnCheckout.Text = "Checkout";
             btnCheckout.UseVisualStyleBackColor = true;
+            btnCheckout.Click += btnCheckout_Click;
             // 
             // lblTotalValue
             // 
@@ -144,6 +145,7 @@
             btnSaveCart.TabIndex = 2;
             btnSaveCart.Text = "Save Cart";
             btnSaveCart.UseVisualStyleBackColor = true;
+            btnSaveCart.Click += btnSaveCart_Click;
             // 
             // btnClearCart
             // 
@@ -154,6 +156,7 @@
             btnClearCart.TabIndex = 1;
             btnClearCart.Text = "Clear Cart";
             btnClearCart.UseVisualStyleBackColor = true;
+            btnClearCart.Click += btnClearCart_Click;
             // 
             // flpCartItems
             // 
