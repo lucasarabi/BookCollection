@@ -90,9 +90,5 @@ namespace BookCollection
             MessageBox.Show("Checkout complete (placeholder).");
         }
 
-        private void btnCheckout_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }
