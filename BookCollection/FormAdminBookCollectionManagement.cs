@@ -53,12 +53,25 @@ namespace BookCollection
 
         private void deleteRecordBtn_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void deleteAllRecordsBtn_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void OpenAdminDirectoryButton_Click(object sender, EventArgs e)
+        {
+            FormAdminDirectory adminDirectory = new FormAdminDirectory();
+            adminDirectory.FormClosed += FormAdminBookCollectionManagement_ShowForm;
+            this.Hide();
+            adminDirectory.ShowDialog();
+        }
+
+        private void FormAdminBookCollectionManagement_ShowForm(object sender, FormClosedEventArgs e)
+        {
+            this.Show();
         }
     }
 }

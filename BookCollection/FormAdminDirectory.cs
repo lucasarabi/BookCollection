@@ -19,7 +19,8 @@ namespace BookCollection
 
         private void storeAdd_Click(object sender, EventArgs e)
         {
-
+            FormAddStore newStore = new FormAddStore();
+            newStore.ShowDialog();
         }
 
         private void storeRemove_Click(object sender, EventArgs e)
@@ -29,12 +30,13 @@ namespace BookCollection
 
         private void storeEdit_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void employeeAdd_Click(object sender, EventArgs e)
         {
-
+            FormAddEmployee newEmployee = new FormAddEmployee();
+            newEmployee.ShowDialog();
         }
 
         private void employeeRemove_Click(object sender, EventArgs e)

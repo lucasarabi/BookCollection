@@ -24,12 +24,12 @@ namespace BookCollection
 
         private void clearButton_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
     }
 }

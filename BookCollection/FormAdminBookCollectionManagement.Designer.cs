@@ -45,12 +45,14 @@
             authorNameLabel = new Label();
             isbnLabel = new Label();
             bookNameLabel = new Label();
+            OpenAdminDirectoryButton = new Button();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(OpenAdminDirectoryButton);
             groupBox2.Controls.Add(deleteAllRecordsBtn);
             groupBox2.Controls.Add(deleteRecordBtn);
             groupBox2.Controls.Add(editRecordBtn);
@@ -67,10 +69,10 @@
             // 
             // deleteAllRecordsBtn
             // 
-            deleteAllRecordsBtn.Location = new Point(498, 36);
+            deleteAllRecordsBtn.Location = new Point(338, 82);
             deleteAllRecordsBtn.Margin = new Padding(3, 4, 3, 4);
             deleteAllRecordsBtn.Name = "deleteAllRecordsBtn";
-            deleteAllRecordsBtn.Size = new Size(142, 84);
+            deleteAllRecordsBtn.Size = new Size(142, 38);
             deleteAllRecordsBtn.TabIndex = 4;
             deleteAllRecordsBtn.Text = "Delete All Records";
             deleteAllRecordsBtn.UseVisualStyleBackColor = true;
@@ -81,7 +83,7 @@
             deleteRecordBtn.Location = new Point(338, 37);
             deleteRecordBtn.Margin = new Padding(3, 4, 3, 4);
             deleteRecordBtn.Name = "deleteRecordBtn";
-            deleteRecordBtn.Size = new Size(142, 84);
+            deleteRecordBtn.Size = new Size(142, 39);
             deleteRecordBtn.TabIndex = 3;
             deleteRecordBtn.Text = "Delete Record";
             deleteRecordBtn.UseVisualStyleBackColor = true;
@@ -229,6 +231,17 @@
             bookNameLabel.TabIndex = 1;
             bookNameLabel.Text = "Book Name:";
             // 
+            // OpenAdminDirectoryButton
+            // 
+            OpenAdminDirectoryButton.Location = new Point(498, 36);
+            OpenAdminDirectoryButton.Margin = new Padding(3, 4, 3, 4);
+            OpenAdminDirectoryButton.Name = "OpenAdminDirectoryButton";
+            OpenAdminDirectoryButton.Size = new Size(142, 84);
+            OpenAdminDirectoryButton.TabIndex = 5;
+            OpenAdminDirectoryButton.Text = "Admin Directory";
+            OpenAdminDirectoryButton.UseVisualStyleBackColor = true;
+            OpenAdminDirectoryButton.Click += OpenAdminDirectoryButton_Click;
+            // 
             // FormAdminBookCollectionManagement
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -264,5 +277,6 @@
         private Label authorNameLabel;
         private Label isbnLabel;
         private Label bookNameLabel;
+        private Button OpenAdminDirectoryButton;
     }
 }
