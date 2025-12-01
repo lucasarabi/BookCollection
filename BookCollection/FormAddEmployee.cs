@@ -13,9 +13,14 @@ namespace BookCollection
 {
     public partial class FormAddEmployee : Form
     {
-        public FormAddEmployee()
+        public FormAddEmployee(bool editMode)
         {
             InitializeComponent();
+
+            if (editMode)
+            {
+
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)

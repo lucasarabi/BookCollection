@@ -13,9 +13,14 @@ namespace BookCollection
 {
     public partial class FormAddStore : Form
     {
-        public FormAddStore()
+        public FormAddStore(bool editMode)
         {
             InitializeComponent();
+
+            if (editMode)
+            {
+            
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -38,7 +43,6 @@ namespace BookCollection
             stateTextBox.Clear();
             zipTextBox.Clear();
             nameTextBox.Clear();
-
         }
 
         private void exitButton_Click(object sender, EventArgs e)

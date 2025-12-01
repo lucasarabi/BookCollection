@@ -61,7 +61,7 @@ namespace BookCollection
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            // Query Caca
+            
         }
 
         private void adminButton_Click(object sender, EventArgs e)

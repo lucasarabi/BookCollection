@@ -84,7 +84,8 @@ namespace BookCollection
             $"Price: {priceTextBox.Text}\n" +
             $"Genre: {genreTextBox.Text}\n" +
             $"Book Type: {bookTypeTextBox.Text}");
-            
+
+            this.Close();
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {

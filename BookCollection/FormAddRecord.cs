@@ -75,7 +75,7 @@ namespace BookCollection
             $"Genre: {genreTextBox.Text}\n" +
             $"Book Type: {bookTypeTextBox.Text}");
 
-            var result = 0;
+            this.Close();
 
             Book newBook = new Book
             {
