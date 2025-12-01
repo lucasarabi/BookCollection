@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookCollection.ObjectClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,11 +20,24 @@ namespace BookCollection
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-
+            Store store = new Store(
+                addressTextBox.Text,
+                cityTextBox.Text,
+                stateTextBox.Text,
+                zipTextBox.Text,
+                nameTextBox.Text
+                );
+            DummyGlobalInfo.STORES.Add( store );
+            Close();
         }
 
         private void clearButton_Click(object sender, EventArgs e)
         {
+            addressTextBox.Clear();
+            cityTextBox.Clear();
+            stateTextBox.Clear();
+            zipTextBox.Clear();
+            nameTextBox.Clear();
 
         }
 

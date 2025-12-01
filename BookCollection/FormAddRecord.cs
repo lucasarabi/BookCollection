@@ -92,6 +92,15 @@ namespace BookCollection
                 BookType = bookTypeTextBox.Text,
                 quantity = int.Parse(quantTextBox.Text)
             };
+            for (int i = 0; i < DummyGlobalInfo.ALL_BOOKS.Count; i++)
+            {
+                if (DummyGlobalInfo.ALL_BOOKS[i].ISBN.Equals(newBook.ISBN)){
+                    DummyGlobalInfo.ALL_BOOKS[i].quantity += newBook.quantity;
+                    return;
+                }
+            }
+            DummyGlobalInfo.ALL_BOOKS.Add(newBook);
+            Close();
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {

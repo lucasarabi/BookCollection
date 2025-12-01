@@ -25,7 +25,7 @@ namespace BookCollection
 
         private void storeRemove_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void storeEdit_Click(object sender, EventArgs e)

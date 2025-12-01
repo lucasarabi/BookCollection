@@ -14,7 +14,7 @@ namespace BookCollection.ObjectClasses
 
         public void AddBook(Book book, int quantity)
         {
-            Items.Add(new CartItem { Book = book, Quantity = quantity });
+            Items.Add(new CartItem ( book, quantity ));
         }
 
         public void RemoveBook(CartItem item) 

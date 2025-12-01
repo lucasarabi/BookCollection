@@ -1,3 +1,5 @@
+using BookCollection.ObjectClasses;
+
 namespace BookCollection
 {
     public partial class FormUserBookCollectionManagement : Form
@@ -17,6 +19,24 @@ namespace BookCollection
             resultsListView.Columns.Add("Quantity", -2, HorizontalAlignment.Left);
             resultsListView.Columns.Add("Count", -2, HorizontalAlignment.Left);
 
+            LoadBooksFromDummyList();
+
+        }
+
+        private void LoadBooksFromDummyList()
+        {
+            resultsListView.Items.Clear();
+            for (int i = 0; i < DummyGlobalInfo.ALL_BOOKS.Count; i++)
+            {
+                Book book = DummyGlobalInfo.ALL_BOOKS[i];
+                ListViewItem item = new ListViewItem(book.Title);
+                item.SubItems.Add(book.BookID);
+                item.SubItems.Add(book.Author);
+                item.SubItems.Add(book.quantity > 0 ? "Available" : "Out of Stock");
+                item.SubItems.Add(book.quantity.ToString());
+
+                resultsListView.Items.Add(item);
+            }
         }
 
         private void clearBtn_Click(object sender, EventArgs e)
@@ -29,12 +49,14 @@ namespace BookCollection
 
         private void viewCartBtn_Click(object sender, EventArgs e)
         {
-            // View Cart caca
+            FormShoppingCart shoppingCart = new FormShoppingCart();
+            shoppingCart.ShowDialog(this);
         }
 
         private void addToCartBtn_Click(object sender, EventArgs e)
         {
-            // Add Stuff Caca
+            DummyGlobalInfo.CURRENT_CART.Add(new CartItem(
+                new Book("Dummy1", "1", "John Doe", DateTime.Today, DateTime.Today, "Some Publisher", 67, "1", 69.99m, "NonFiction", "Default", 1),1));
         }
 
         private void searchBtn_Click(object sender, EventArgs e)

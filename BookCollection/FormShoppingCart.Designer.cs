@@ -62,95 +62,91 @@
             groupBox1.Controls.Add(btnSaveCart);
             groupBox1.Controls.Add(btnClearCart);
             groupBox1.Controls.Add(flpCartItems);
-            groupBox1.Location = new Point(17, 17);
-            groupBox1.Margin = new Padding(3, 4, 3, 4);
+            groupBox1.Location = new Point(15, 13);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(713, 549);
+            groupBox1.Size = new Size(624, 412);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Your Shopping Cart";
             // 
             // btnCheckout
             // 
-            btnCheckout.Location = new Point(18, 443);
-            btnCheckout.Margin = new Padding(3, 4, 3, 4);
+            btnCheckout.Location = new Point(16, 332);
             btnCheckout.Name = "btnCheckout";
-            btnCheckout.Size = new Size(429, 77);
+            btnCheckout.Size = new Size(375, 58);
             btnCheckout.TabIndex = 9;
             btnCheckout.Text = "Checkout";
             btnCheckout.UseVisualStyleBackColor = true;
+            btnCheckout.Click += btnCheckout_Click_1;
             // 
             // lblTotalValue
             // 
             lblTotalValue.AutoSize = true;
-            lblTotalValue.Location = new Point(535, 293);
+            lblTotalValue.Location = new Point(468, 220);
             lblTotalValue.Name = "lblTotalValue";
-            lblTotalValue.Size = new Size(123, 20);
+            lblTotalValue.Size = new Size(97, 15);
             lblTotalValue.TabIndex = 8;
             lblTotalValue.Text = "valueplaceholder";
             // 
             // lblTaxValue
             // 
             lblTaxValue.AutoSize = true;
-            lblTaxValue.Location = new Point(535, 259);
+            lblTaxValue.Location = new Point(468, 194);
             lblTaxValue.Name = "lblTaxValue";
-            lblTaxValue.Size = new Size(123, 20);
+            lblTaxValue.Size = new Size(97, 15);
             lblTaxValue.TabIndex = 7;
             lblTaxValue.Text = "valueplaceholder";
             // 
             // lblSubtotalValue
             // 
             lblSubtotalValue.AutoSize = true;
-            lblSubtotalValue.Location = new Point(535, 223);
+            lblSubtotalValue.Location = new Point(468, 167);
             lblSubtotalValue.Name = "lblSubtotalValue";
-            lblSubtotalValue.Size = new Size(123, 20);
+            lblSubtotalValue.Size = new Size(97, 15);
             lblSubtotalValue.TabIndex = 6;
             lblSubtotalValue.Text = "valueplaceholder";
             // 
             // lblTotalText
             // 
             lblTotalText.AutoSize = true;
-            lblTotalText.Location = new Point(487, 293);
+            lblTotalText.Location = new Point(426, 220);
             lblTotalText.Name = "lblTotalText";
-            lblTotalText.Size = new Size(45, 20);
+            lblTotalText.Size = new Size(36, 15);
             lblTotalText.TabIndex = 5;
             lblTotalText.Text = "Total:";
             // 
             // lblTaxText
             // 
             lblTaxText.AutoSize = true;
-            lblTaxText.Location = new Point(497, 259);
+            lblTaxText.Location = new Point(435, 194);
             lblTaxText.Name = "lblTaxText";
-            lblTaxText.Size = new Size(33, 20);
+            lblTaxText.Size = new Size(27, 15);
             lblTaxText.TabIndex = 4;
             lblTaxText.Text = "Tax:";
             // 
             // lblSubtotalText
             // 
             lblSubtotalText.AutoSize = true;
-            lblSubtotalText.Location = new Point(466, 223);
+            lblSubtotalText.Location = new Point(408, 167);
             lblSubtotalText.Name = "lblSubtotalText";
-            lblSubtotalText.Size = new Size(68, 20);
+            lblSubtotalText.Size = new Size(54, 15);
             lblSubtotalText.TabIndex = 3;
             lblSubtotalText.Text = "Subtotal:";
             // 
             // btnSaveCart
             // 
-            btnSaveCart.Location = new Point(466, 123);
-            btnSaveCart.Margin = new Padding(3, 4, 3, 4);
+            btnSaveCart.Location = new Point(408, 92);
             btnSaveCart.Name = "btnSaveCart";
-            btnSaveCart.Size = new Size(217, 69);
+            btnSaveCart.Size = new Size(190, 52);
             btnSaveCart.TabIndex = 2;
             btnSaveCart.Text = "Save Cart";
             btnSaveCart.UseVisualStyleBackColor = true;
             // 
             // btnClearCart
             // 
-            btnClearCart.Location = new Point(466, 45);
-            btnClearCart.Margin = new Padding(3, 4, 3, 4);
+            btnClearCart.Location = new Point(408, 34);
             btnClearCart.Name = "btnClearCart";
-            btnClearCart.Size = new Size(217, 69);
+            btnClearCart.Size = new Size(190, 52);
             btnClearCart.TabIndex = 1;
             btnClearCart.Text = "Clear Cart";
             btnClearCart.UseVisualStyleBackColor = true;
@@ -160,21 +156,19 @@
             flpCartItems.AutoScroll = true;
             flpCartItems.BorderStyle = BorderStyle.FixedSingle;
             flpCartItems.FlowDirection = FlowDirection.TopDown;
-            flpCartItems.Location = new Point(17, 45);
-            flpCartItems.Margin = new Padding(3, 4, 3, 4);
+            flpCartItems.Location = new Point(15, 34);
             flpCartItems.Name = "flpCartItems";
-            flpCartItems.Size = new Size(429, 374);
+            flpCartItems.Size = new Size(376, 281);
             flpCartItems.TabIndex = 0;
             flpCartItems.WrapContents = false;
             // 
             // FormShoppingCart
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(744, 580);
+            ClientSize = new Size(651, 435);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "FormShoppingCart";
             Text = "ShoppingCart";
