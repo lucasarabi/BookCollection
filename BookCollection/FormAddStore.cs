@@ -12,19 +12,28 @@ namespace BookCollection
 {
     public partial class FormAddStore : Form
     {
-        public FormAddStore()
+        public FormAddStore(bool editMode)
         {
             InitializeComponent();
+
+            if (editMode)
+            {
+            
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void clearButton_Click(object sender, EventArgs e)
         {
-
+            addressTextBox.Clear();
+            cityTextBox.Clear();
+            stateTextBox.Clear();
+            zipTextBox.Clear();
+            nameTextBox.Clear();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
