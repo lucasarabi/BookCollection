@@ -18,6 +18,8 @@ namespace BookCollection
 
         public FormAdminDirectory()
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.MaximizeBox = false;
             InitializeComponent();
         }
 
@@ -53,5 +55,9 @@ namespace BookCollection
             FormAddEmployee editEmployee = new FormAddEmployee(true);
         }
 
+        private void FormAdminDirectory_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

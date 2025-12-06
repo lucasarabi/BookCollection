@@ -14,6 +14,19 @@ namespace BookCollection
     {
         public FormEditRecord()
         {
+            this.StartPosition = FormStartPosition.Manual;
+
+            int screenW = Screen.PrimaryScreen.WorkingArea.Width;
+            int screenH = Screen.PrimaryScreen.WorkingArea.Height;
+
+            int targetX = (int)(screenW * (2.0 / 3.0));
+            int targetY = screenH / 2 - this.Height;
+
+            this.Location = new Point(targetX, targetY);
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.MaximizeBox = false;
+
             InitializeComponent();
         }
 
@@ -23,8 +36,8 @@ namespace BookCollection
             titleTextBox.Text = "Test Book Title";
             isbnTextBox.Text = "1234567890";
             authorTextBox.Text = "John Doe";
-            pubDateTextBox.Text = "01/01/2025";
-            dateAddedTextBox.Text = "01/02/2025";
+            PubDatePicker.Text = "01/01/2025";
+            dateAddedTimePicker.Text = "01/02/2025";
             publisherTextBox.Text = "Test Publisher";
             numPagesTextBox.Text = "350";
             bookIDTextBox.Text = "1001";
@@ -43,12 +56,6 @@ namespace BookCollection
 
             if (string.IsNullOrWhiteSpace(authorTextBox.Text))
                 authorTextBox.Text = "N/A";
-
-            if (string.IsNullOrWhiteSpace(pubDateTextBox.Text))
-                pubDateTextBox.Text = "N/A";
-
-            if (string.IsNullOrWhiteSpace(dateAddedTextBox.Text))
-                dateAddedTextBox.Text = "N/A";
 
             if (string.IsNullOrWhiteSpace(publisherTextBox.Text))
                 publisherTextBox.Text = "N/A";
@@ -75,8 +82,8 @@ namespace BookCollection
             $"Title: {titleTextBox.Text}\n" +
             $"ISBN: {isbnTextBox.Text}\n" +
             $"Author: {authorTextBox.Text}\n" +
-            $"Publish Date: {pubDateTextBox.Text}\n" +
-            $"Date Added: {dateAddedTextBox.Text}\n" +
+            $"Publish Date: {PubDatePicker.Value}\n" +
+            $"Date Added: {dateAddedTimePicker.Value}\n" +
             $"Publisher: {publisherTextBox.Text}\n" +
             $"Num Pages: {numPagesTextBox.Text}\n" +
             $"Book ID: {bookIDTextBox.Text}\n" +

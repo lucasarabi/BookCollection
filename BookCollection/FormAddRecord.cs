@@ -16,6 +16,19 @@ namespace BookCollection
     {
         public FormAddRecord()
         {
+            this.StartPosition = FormStartPosition.Manual;
+
+            int screenW = Screen.PrimaryScreen.WorkingArea.Width;
+            int screenH = Screen.PrimaryScreen.WorkingArea.Height;
+
+            int targetX = (int)(screenW * (2.0 / 3.0));
+            int targetY = screenH / 2 - this.Height;
+
+            this.Location = new Point(targetX, targetY);
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.MaximizeBox = false;
+
             InitializeComponent();
         }
 
@@ -33,12 +46,6 @@ namespace BookCollection
 
             if (string.IsNullOrWhiteSpace(authorTextBox.Text))
                 authorTextBox.Text = "N/A";
-
-            if (string.IsNullOrWhiteSpace(pubDateTextBox.Text))
-                pubDateTextBox.Text = "N/A";
-
-            if (string.IsNullOrWhiteSpace(dateAddedTextBox.Text))
-                dateAddedTextBox.Text = "N/A";
 
             if (string.IsNullOrWhiteSpace(publisherTextBox.Text))
                 publisherTextBox.Text = "N/A";
@@ -60,13 +67,13 @@ namespace BookCollection
 
             if (string.IsNullOrWhiteSpace(bookTypeTextBox.Text))
                 bookTypeTextBox.Text = "N/A";
-                
+
             MessageBox.Show("SAVE clicked.\n\n" +
             $"Title: {titleTextBox.Text}\n" +
             $"ISBN: {isbnTextBox.Text}\n" +
             $"Author: {authorTextBox.Text}\n" +
-            $"Publish Date: {pubDateTextBox.Text}\n" +
-            $"Date Added: {dateAddedTextBox.Text}\n" +
+            $"Publish Date: {PubDatePicker.Text}\n" +
+            $"Date Added: {DateAddedTimePicker.Text}\n" +
             $"Publisher: {publisherTextBox.Text}\n" +
             $"Num Pages: {numPagesTextBox.Text}\n" +
             $"Book ID: {bookIDTextBox.Text}\n" +
@@ -82,8 +89,8 @@ namespace BookCollection
                 Title = titleTextBox.Text,
                 ISBN = isbnTextBox.Text,
                 Author = authorTextBox.Text,
-                PublishDate = DateTime.Parse(pubDateTextBox.Text),
-                DateAdded = DateTime.Parse(dateAddedTextBox.Text),
+                PublishDate = PubDatePicker.Value,
+                DateAdded = DateAddedTimePicker.Value,
                 Publisher = publisherTextBox.Text,
                 NumOfPages = int.Parse(numPagesTextBox.Text),
                 BookID = bookIDTextBox.Text,
@@ -91,10 +98,13 @@ namespace BookCollection
                 Genre = genreTextBox.Text,
                 BookType = bookTypeTextBox.Text,
                 quantity = int.Parse(quantTextBox.Text)
+
             };
+
             for (int i = 0; i < DummyGlobalInfo.ALL_BOOKS.Count; i++)
             {
-                if (DummyGlobalInfo.ALL_BOOKS[i].ISBN.Equals(newBook.ISBN)){
+                if (DummyGlobalInfo.ALL_BOOKS[i].ISBN.Equals(newBook.ISBN))
+                {
                     DummyGlobalInfo.ALL_BOOKS[i].quantity += newBook.quantity;
                     return;
                 }
@@ -106,6 +116,11 @@ namespace BookCollection
         {
             MessageBox.Show("Cancel button clicked.");
             this.Close();
+        }
+
+        private void addrecGroupBox_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

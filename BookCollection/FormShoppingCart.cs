@@ -14,6 +14,19 @@ namespace BookCollection
     {
         public FormShoppingCart()
         {
+            this.StartPosition = FormStartPosition.Manual;
+
+            int screenW = Screen.PrimaryScreen.WorkingArea.Width;
+            int screenH = Screen.PrimaryScreen.WorkingArea.Height;
+
+            int targetX = (int)(screenW * (1.5 / 2.5));
+            int targetY = screenH / 2 - this.Height;
+
+            this.Location = new Point(targetX, targetY);
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.MaximizeBox = false;
+
             InitializeComponent();
             LoadCart();
             UpdateTotals();
@@ -90,5 +103,9 @@ namespace BookCollection
             MessageBox.Show("Checkout complete (placeholder).");
         }
 
+        private void FormShoppingCart_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

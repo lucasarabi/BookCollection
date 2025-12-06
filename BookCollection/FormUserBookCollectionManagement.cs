@@ -6,21 +6,28 @@ namespace BookCollection
     {
         public FormUserBookCollectionManagement()
         {
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             InitializeComponent();
 
+            //Locks Column Resizing
+            resultsListView.ColumnWidthChanging += ResultsListView_ColumnWidthChanging;
+            
             // This is where the ListView Columns are cacaed
             resultsListView.FullRowSelect = true;
             resultsListView.GridLines = true;
             resultsListView.View = View.Details;
-            resultsListView.Columns.Add("Book Name", -2, HorizontalAlignment.Left);
-            resultsListView.Columns.Add("Book ID", -2, HorizontalAlignment.Left);
-            resultsListView.Columns.Add("Author", -2, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Book Name", 200, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Book ID", 80, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Author", 150, HorizontalAlignment.Left);
             resultsListView.Columns.Add("Status", -2, HorizontalAlignment.Left);
-            resultsListView.Columns.Add("Quantity", -2, HorizontalAlignment.Left);
-            resultsListView.Columns.Add("Count", -2, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Quantity", 60, HorizontalAlignment.Left);
+
+            
 
             LoadBooksFromDummyList();
-
+            
         }
 
         private void LoadBooksFromDummyList()
@@ -36,7 +43,14 @@ namespace BookCollection
                 item.SubItems.Add(book.quantity.ToString());
 
                 resultsListView.Items.Add(item);
+
             }
+        }
+
+        private void ResultsListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            e.Cancel = true;
+            e.NewWidth = resultsListView.Columns[e.ColumnIndex].Width;
         }
 
         private void clearBtn_Click(object sender, EventArgs e)
@@ -56,12 +70,12 @@ namespace BookCollection
         private void addToCartBtn_Click(object sender, EventArgs e)
         {
             DummyGlobalInfo.CURRENT_CART.Add(new CartItem(
-                new Book("Dummy1", "1", "John Doe", DateTime.Today, DateTime.Today, "Some Publisher", 67, "1", 69.99m, "NonFiction", "Default", 1),1));
+                new Book("Dummy1", "1", "John Doe", DateTime.Today, DateTime.Today, "Some Publisher", 67, "1", 69.99m, "NonFiction", "Default", 1), 1));
         }
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            
+                //DATABASE NEEDED 
         }
 
         private void adminButton_Click(object sender, EventArgs e)
@@ -75,7 +89,12 @@ namespace BookCollection
 
         private void AdminPage_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Show(); 
+            this.Show();
+
+        }
+
+        private void FormUserBookCollectionManagement_Load(object sender, EventArgs e)
+        {
 
         }
     }

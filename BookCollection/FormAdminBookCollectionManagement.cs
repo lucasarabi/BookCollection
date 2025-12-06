@@ -15,16 +15,19 @@ namespace BookCollection
     {
         public FormAdminBookCollectionManagement()
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.MaximizeBox = false;
+
             InitializeComponent();
             // This is where the ListView Columns are cacaed
             resultsListView.FullRowSelect = true;
             resultsListView.GridLines = true;
             resultsListView.View = View.Details;
-            resultsListView.Columns.Add("Book Name", -2, HorizontalAlignment.Left);
-            resultsListView.Columns.Add("Book ID", -2, HorizontalAlignment.Left);
-            resultsListView.Columns.Add("Author", -2, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Book Name", 200, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Book ID", 80, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Author", 150, HorizontalAlignment.Left);
             resultsListView.Columns.Add("Status", -2, HorizontalAlignment.Left);
-            resultsListView.Columns.Add("Quantity", -2, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Quantity", 60, HorizontalAlignment.Left);
 
             LoadBooksFromDummyList();
 
@@ -132,6 +135,11 @@ namespace BookCollection
         private void FormAdminBookCollectionManagement_ShowForm(object sender, FormClosedEventArgs e)
         {
             this.Show();
+        }
+
+        private void FormAdminBookCollectionManagement_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

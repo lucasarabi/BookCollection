@@ -174,6 +174,7 @@
             MaximizeBox = false;
             Name = "FormShoppingCart";
             Text = "ShoppingCart";
+            Load += FormShoppingCart_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

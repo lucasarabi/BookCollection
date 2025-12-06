@@ -15,11 +15,24 @@ namespace BookCollection
     {
         public FormAddEmployee(bool editMode)
         {
+            this.StartPosition = FormStartPosition.Manual;
+
+            int screenW = Screen.PrimaryScreen.WorkingArea.Width;
+            int screenH = Screen.PrimaryScreen.WorkingArea.Height;
+
+            int targetX = (int)(screenW * (1.5 / 2.5));
+            int targetY = screenH / 2 - this.Height;
+
+            this.Location = new Point(targetX, targetY);
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.MaximizeBox = false;
+
             InitializeComponent();
 
-            if (editMode)
-            {
-
+            if (editMode) 
+            { 
+            
             }
         }
 
@@ -31,7 +44,7 @@ namespace BookCollection
                 decimal.Parse(payMaskedTextBox.Text),
                 birthdayDatePicker.Value
                 );
-            DummyGlobalInfo.ALL_EMPLOYEES.Add( employeeObj );
+            DummyGlobalInfo.ALL_EMPLOYEES.Add(employeeObj);
             Close();
         }
 
@@ -47,6 +60,11 @@ namespace BookCollection
         private void exitButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void FormAddEmployee_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
