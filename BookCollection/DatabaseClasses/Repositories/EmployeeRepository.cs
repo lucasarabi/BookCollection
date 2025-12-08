@@ -11,7 +11,7 @@ namespace BookCollection.Repsitories
 {
     internal class EmployeeRepository
     {
-        public void Add(Employee emp)
+        public static void Add(Employee emp)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
@@ -29,7 +29,7 @@ namespace BookCollection.Repsitories
             }
         }
 
-        public List<Employee> GetAll()
+        public static List<Employee> GetAll()
         {
             var list = new List<Employee>();
             using (var conn = DatabaseHelper.GetConnection())
@@ -53,7 +53,7 @@ namespace BookCollection.Repsitories
             return list;
         }
 
-        public void Delete(string employeeId)
+        public static void Delete(string employeeId)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
