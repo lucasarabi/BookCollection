@@ -24,7 +24,6 @@ namespace BookCollection
             resultsListView.Columns.Add("Status", -2, HorizontalAlignment.Left);
             resultsListView.Columns.Add("Quantity", 60, HorizontalAlignment.Left);
 
-            
 
             LoadBooksFromDummyList();
             
