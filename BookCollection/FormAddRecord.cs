@@ -68,6 +68,8 @@ namespace BookCollection
             if (string.IsNullOrWhiteSpace(bookTypeTextBox.Text))
                 bookTypeTextBox.Text = "N/A";
 
+            /*
+            
             MessageBox.Show("SAVE clicked.\n\n" +
             $"Title: {titleTextBox.Text}\n" +
             $"ISBN: {isbnTextBox.Text}\n" +
@@ -81,6 +83,8 @@ namespace BookCollection
             $"Price: {priceTextBox.Text}\n" +
             $"Genre: {genreTextBox.Text}\n" +
             $"Book Type: {bookTypeTextBox.Text}");
+
+            */
 
             this.Close();
 

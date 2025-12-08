@@ -1,6 +1,7 @@
 ﻿using BookCollection.Database;
 using BookCollection.ObjectClasses;
 using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace BookCollection.DatabaseClasses.Repositories
 {
-    internal class BookRepository
+    internal static class BookRepository
     {
-        public void Add(Book book)
+        public static void Add(Book book)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
@@ -39,13 +40,14 @@ namespace BookCollection.DatabaseClasses.Repositories
             }
         }
 
-        public List<Book> GetAll()
+        public static List<Book> GetAll()
         {
             var list = new List<Book>();
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
                 string sql = "SELECT * FROM Books";
+
                 using (var cmd = new SqlCommand(sql, conn))
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -72,7 +74,7 @@ namespace BookCollection.DatabaseClasses.Repositories
             return list;
         }
 
-        public void Update(Book book)
+        public static void Update(Book book)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
@@ -89,7 +91,7 @@ namespace BookCollection.DatabaseClasses.Repositories
             }
         }
 
-        public void Delete(string bookID)
+        public static void Delete(string bookID)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
