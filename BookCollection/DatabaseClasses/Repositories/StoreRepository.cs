@@ -11,7 +11,7 @@ namespace BookCollection.DatabaseClasses.Repositories
 {
     internal class StoreRepository
     {
-        public void Add(Store store)
+        public static void Add(Store store)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
@@ -30,7 +30,7 @@ namespace BookCollection.DatabaseClasses.Repositories
             }
         }
 
-        public Dictionary<int, Store> GetAll()
+        public static Dictionary<int, Store> GetAll()
         {
             var list = new Dictionary<int, Store>();
             using (var conn = DatabaseHelper.GetConnection())
@@ -56,7 +56,7 @@ namespace BookCollection.DatabaseClasses.Repositories
             }
             return list;
         }
-        public void Delete(int storeId)
+        public static void Delete(int storeId)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
