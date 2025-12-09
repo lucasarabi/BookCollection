@@ -18,9 +18,8 @@ namespace BookCollection
     {
         private Book? currBook;
 
-        public FormEditRecord()
+        public FormEditRecord(Book b)
         {
-            book = bookToEdit;
             this.StartPosition = FormStartPosition.Manual;
 
             int screenW = Screen.PrimaryScreen.WorkingArea.Width;
@@ -36,9 +35,8 @@ namespace BookCollection
 
             InitializeComponent();
 
-            string id = bookIDTextBox.Text;
-
-            currBook = BookRepository.GetById(id);
+            currBook = b;
+                       
 
         }
 

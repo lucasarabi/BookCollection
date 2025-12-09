@@ -18,17 +18,7 @@ namespace BookCollection
     {
         public FormAddRecord()
         {
-            this.StartPosition = FormStartPosition.Manual;
-
-            int screenW = Screen.PrimaryScreen.WorkingArea.Width;
-            int screenH = Screen.PrimaryScreen.WorkingArea.Height;
-
-            int targetX = (int)(screenW * (2.0 / 3.0));
-            int targetY = screenH / 2 - this.Height;
-
-            this.Location = new Point(targetX, targetY);
-
-            this.StartPosition = FormStartPosition.Manual;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.MaximizeBox = false;
 
             InitializeComponent();
