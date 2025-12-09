@@ -29,7 +29,7 @@ namespace BookCollection
             ALL_BOOKS.Add(new Book("Dummy3", "3", "John Doe", DateTime.Today, DateTime.Today, "Some Publisher", 67, "3", 69.99m, "NonFiction", "Default", 1));
             ALL_BOOKS.Add(new Book("Dummy4", "4", "John Doe", DateTime.Today, DateTime.Today, "Some Publisher", 67, "4", 69.99m, "NonFiction", "Default", 1));
 
-            ALL_EMPLOYEES.Add(new Employee("1", "John Doe", 67.67m, DateTime.Today));
+            ALL_EMPLOYEES.Add(new Employee("John Doe", 67.67m, DateTime.Today));
 
             STORES.Add(new Store("676767 SW 67th Ave", "Bikini Bottom", "Point Nemo", "67676", "BooksNStuff"));
         }

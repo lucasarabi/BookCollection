@@ -16,7 +16,28 @@ namespace BookCollection.Repsitories
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                string sql = "INSERT INTO Employees (EmployeeID, Name, Pay, Birthday) VALUES (@id, @name, @pay, @dob)";
+                string sql = "INSERT INTO Employees (EmployeeID, Name, Pay, Birthday) VALUES (@name, @pay, @dob)";
+
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@name", emp.Name);
+                    cmd.Parameters.AddWithValue("@pay", emp.pay);
+                    cmd.Parameters.AddWithValue("@dob", emp.Birthday);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void Update(Employee emp)
+        {
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                string sql = @"UPDATE Employees 
+                               SET Name = @name, 
+                                   Pay = @pay, 
+                                   Birthday = @dob 
+                               WHERE EmployeeID = @id";
 
                 using (var cmd = new SqlCommand(sql, conn))
                 {
@@ -24,6 +45,7 @@ namespace BookCollection.Repsitories
                     cmd.Parameters.AddWithValue("@name", emp.Name);
                     cmd.Parameters.AddWithValue("@pay", emp.pay);
                     cmd.Parameters.AddWithValue("@dob", emp.Birthday);
+
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -42,7 +64,6 @@ namespace BookCollection.Repsitories
                     {
                         list.Add(new Employee
                         {
-                            EmployeeID = reader["EmployeeID"].ToString(),
                             Name = reader["Name"].ToString(),
                             pay = (decimal)reader["Pay"],
                             Birthday = (DateTime)reader["Birthday"]

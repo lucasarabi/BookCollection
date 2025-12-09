@@ -7,13 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using BookCollection.ObjectClasses;
+using BookCollection.Repsitories;
 
 namespace BookCollection
 {
     public partial class FormAddEmployee : Form
     {
-        public FormAddEmployee(bool editMode)
+
+        private bool isEditMode = false;
+        private Employee? selectedEmployee;
+        public FormAddEmployee(Employee? selectedEmployee)
         {
             this.StartPosition = FormStartPosition.Manual;
 
@@ -30,21 +35,35 @@ namespace BookCollection
 
             InitializeComponent();
 
-            if (editMode) 
-            { 
-            
+            if (selectedEmployee != null)
+            {
+                this.selectedEmployee = selectedEmployee;
+                this.nameTextBox.Text = selectedEmployee.Name;
+                this.employeeIdMaskedTextBox.Text = selectedEmployee.EmployeeID.ToString();
+                this.payMaskedTextBox.Text = selectedEmployee.pay.ToString();
+                this.birthdayDatePicker.Value = selectedEmployee.Birthday;
+                this.ageMaskedTextBox.Text = selectedEmployee.age.ToString();
+                isEditMode = true;
             }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Employee employeeObj = new Employee(
-                employeeIdMaskedTextBox.Text,
-                nameTextBox.Text,
-                decimal.Parse(payMaskedTextBox.Text),
-                birthdayDatePicker.Value
-                );
-            DummyGlobalInfo.ALL_EMPLOYEES.Add(employeeObj);
+            if (isEditMode)
+            {
+                selectedEmployee.Name = this.nameTextBox.Text;
+                selectedEmployee.Birthday = this.birthdayDatePicker.Value;
+                EmployeeRepository.Update(selectedEmployee);
+            }
+            else
+            {
+                Employee employee = new Employee(
+                    nameTextBox.Text,
+                    decimal.Parse(payMaskedTextBox.Text),
+                    birthdayDatePicker.Value
+                    );
+                EmployeeRepository.Add(employee);
+            }
             Close();
         }
 
@@ -60,11 +79,6 @@ namespace BookCollection
         private void exitButton_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void FormAddEmployee_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

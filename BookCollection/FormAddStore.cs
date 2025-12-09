@@ -1,4 +1,5 @@
-﻿using BookCollection.ObjectClasses;
+﻿using BookCollection.DatabaseClasses.Repositories;
+using BookCollection.ObjectClasses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,9 @@ namespace BookCollection
 {
     public partial class FormAddStore : Form
     {
-        public FormAddStore(bool editMode)
+        private bool isEditMode = false;
+        Store? selectedStore;
+        public FormAddStore(Store? selectedStore)
         {
 
             this.StartPosition = FormStartPosition.Manual;
@@ -31,23 +34,41 @@ namespace BookCollection
 
             InitializeComponent();
 
-            if (editMode) 
-            { 
-            
+            if (selectedStore != null) 
+            {
+                this.selectedStore = selectedStore;
+                this.addressTextBox.Text = selectedStore.address;
+                this.cityTextBox.Text = selectedStore.city;
+                this.stateTextBox.Text = selectedStore.state;
+                this.zipTextBox.Text = selectedStore.zipCode;
+                this.nameTextBox.Text = selectedStore.name;
+                isEditMode = true;
             }
 
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Store store = new Store(
-                addressTextBox.Text,
-                cityTextBox.Text,
-                stateTextBox.Text,
-                zipTextBox.Text,
-                nameTextBox.Text
-                );
-            DummyGlobalInfo.STORES.Add(store);
+            if (isEditMode)
+            {
+                selectedStore.address = this.addressTextBox.Text;
+                selectedStore.city = this.cityTextBox.Text;
+                selectedStore.state = this.stateTextBox.Text;
+                selectedStore.zipCode = this.zipTextBox.Text;
+                selectedStore.name = this.nameTextBox.Text;
+                StoreRepository.Update(selectedStore);
+            }
+            else
+            {
+                Store store = new Store(
+                    addressTextBox.Text,
+                    cityTextBox.Text,
+                    stateTextBox.Text,
+                    zipTextBox.Text,
+                    nameTextBox.Text
+                    );
+                StoreRepository.Add(store);
+            } 
             Close();
         }
 

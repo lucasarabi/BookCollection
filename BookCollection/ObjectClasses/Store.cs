@@ -9,6 +9,7 @@ namespace BookCollection.ObjectClasses
 {
     public class Store
     {
+        public int storeId { get; set; }
         public required string address { get; set; }
         public required string city { get; set; }
         public required string state { get; set; }

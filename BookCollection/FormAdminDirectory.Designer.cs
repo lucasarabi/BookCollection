@@ -169,7 +169,6 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormAdminDirectory";
             Text = "Admin Directory";
-            Load += FormAdminDirectory_Load;
             storeGroupBox.ResumeLayout(false);
             employeeGroupBox.ResumeLayout(false);
             ResumeLayout(false);

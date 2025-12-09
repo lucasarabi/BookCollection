@@ -30,9 +30,38 @@ namespace BookCollection.DatabaseClasses.Repositories
             }
         }
 
-        public static Dictionary<int, Store> GetAll()
+        public static void Update(Store store)
         {
-            var list = new Dictionary<int, Store>();
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                string sql = @"UPDATE Stores 
+                               SET Name = @name, 
+                                   Address = @addr, 
+                                   City = @city, 
+                                   State = @state, 
+                                   ZipCode = @zip 
+                               WHERE StoreID = @id";
+
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", store.storeId);
+
+                    cmd.Parameters.AddWithValue("@name", store.name);
+                    cmd.Parameters.AddWithValue("@addr", store.address);
+                    cmd.Parameters.AddWithValue("@city", store.city);
+                    cmd.Parameters.AddWithValue("@state", store.state);
+                    cmd.Parameters.AddWithValue("@zip", store.zipCode);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<Store> GetAll()
+        {
+            var list = new List<Store>();
+
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
@@ -41,21 +70,23 @@ namespace BookCollection.DatabaseClasses.Repositories
                 {
                     while (reader.Read())
                     {
-                        int id = (int)reader["StoreID"];
                         var s = new Store
                         {
+                            storeId = (int)reader["StoreID"],
                             name = reader["Name"].ToString(),
                             address = reader["Address"].ToString(),
                             city = reader["City"].ToString(),
                             state = reader["State"].ToString(),
                             zipCode = reader["ZipCode"].ToString()
                         };
-                        list.Add(id, s);
+
+                        list.Add(s);
                     }
                 }
             }
             return list;
         }
+
         public static void Delete(int storeId)
         {
             using (var conn = DatabaseHelper.GetConnection())
