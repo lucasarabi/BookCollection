@@ -70,23 +70,50 @@ namespace BookCollection
 
                 item.QuantityIncreased += (s, e) =>
                 {
+                    
+                    if (cartItem.Book.quantity <= 0)
+                    {
+                        
+                        item.Quantity--;  // undo label increment
+                        MessageBox.Show("No more copies of this book are available.",
+                                        "Out of Stock",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    
                     cartItem.Quantity++;
+                    cartItem.Book.quantity--;
+
                     bookItem.Quantity = cartItem.Quantity;
                     UpdateTotals();
                 };
 
                 item.QuantityDecreased += (s, e) =>
                 {
+                    // user clicked - ; CartItemControl already decremented its label
+
                     cartItem.Quantity--;
+                    cartItem.Book.quantity++;   // ✅ return 1 copy to stock
+
                     bookItem.Quantity = cartItem.Quantity;
                     UpdateTotals();
                 };
 
                 item.ItemRemoved += (s, e) =>
                 {
+                   
+                    cartItem.Book.quantity += cartItem.Quantity;
+
                     DummyGlobalInfo.CURRENT_CART.Remove(cartItem);
                     flpCartItems.Controls.Remove(item);
                     UpdateTotals();
+
+                    MessageBox.Show("Item removed from cart.",
+                                    "Removed",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
                 };
 
                 flpCartItems.Controls.Add(item);
@@ -119,14 +146,19 @@ namespace BookCollection
         // BUTTONS
         private void btnClearCart_Click(object sender, EventArgs e)
         {
+            foreach (var cartItem in DummyGlobalInfo.CURRENT_CART)
+            {
+                cartItem.Book.quantity += cartItem.Quantity;
+            }
+
             DummyGlobalInfo.CURRENT_CART.Clear();
             flpCartItems.Controls.Clear();
             UpdateTotals();
 
             MessageBox.Show("Cart cleared.",
-                    "Cart Emptied",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                            "Cart Emptied",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
         }
 
         private void btnSaveCart_Click(object sender, EventArgs e)

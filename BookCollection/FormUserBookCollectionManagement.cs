@@ -29,9 +29,64 @@ namespace BookCollection
             resultsListView.Columns.Add("Price", 80, HorizontalAlignment.Left);
 
 
-
+            SeedDummyBooksIfEmpty();
             LoadBooks();
 
+        }
+
+        private void SeedDummyBooksIfEmpty()
+        {
+            var existing = BookRepository.GetAll();
+            if (existing.Count > 0)
+                return; // already have data, don't seed again
+
+            var today = DateTime.Today;
+
+            // You can change titles, prices, etc. as you like
+            BookRepository.Add(new Book(
+                title: "The Great Gatsby",
+                iSBN: "9780743273565",
+                author: "F. Scott Fitzgerald",
+                publishDate: new DateTime(1925, 4, 10),
+                dateAdded: today,
+                publisher: "Scribner",
+                numOfPages: 180,
+                bookID: "B001",
+                price: 10.99m,
+                genre: "Fiction",
+                bookType: "Hardcover",
+                quantity: 5
+            ));
+
+            BookRepository.Add(new Book(
+                title: "1984",
+                iSBN: "9780451524935",
+                author: "George Orwell",
+                publishDate: new DateTime(1949, 6, 8),
+                dateAdded: today,
+                publisher: "Secker & Warburg",
+                numOfPages: 328,
+                bookID: "B002",
+                price: 8.50m,
+                genre: "Dystopian",
+                bookType: "Paperback",
+                quantity: 3
+            ));
+
+            BookRepository.Add(new Book(
+                title: "C# In Depth",
+                iSBN: "9781617294532",
+                author: "Jon Skeet",
+                publishDate: new DateTime(2019, 3, 23),
+                dateAdded: today,
+                publisher: "Manning",
+                numOfPages: 900,
+                bookID: "B003",
+                price: 49.99m,
+                genre: "Programming",
+                bookType: "Paperback",
+                quantity: 2
+            ));
         }
 
         private void LoadBooks()
@@ -54,6 +109,9 @@ namespace BookCollection
                 item.SubItems.Add(book.Author);
                 item.SubItems.Add(book.quantity > 0 ? "Available" : "Out of Stock");
                 item.SubItems.Add(book.quantity.ToString());
+                item.SubItems.Add(book.Price.ToString("C"));
+
+                item.Tag = book;
 
                 resultsListView.Items.Add(item);
             }
@@ -75,8 +133,12 @@ namespace BookCollection
 
         private void viewCartBtn_Click(object sender, EventArgs e)
         {
-            FormShoppingCart shoppingCart = new FormShoppingCart();
-            shoppingCart.ShowDialog(this);
+            using (FormShoppingCart shoppingCart = new FormShoppingCart())
+            {
+                shoppingCart.ShowDialog(this);
+            }
+
+            UpdateUI();
         }
 
         private void addToCartBtn_Click(object sender, EventArgs e)
@@ -97,7 +159,15 @@ namespace BookCollection
                 return;
             }
 
-            // If the book is already in the cart, increase quantity
+            if (selectedBook.quantity <= 0)
+            {
+                MessageBox.Show("No more copies of this book are available.",
+                                "Out of Stock",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                return;
+            }
+
             var existing = DummyGlobalInfo.CURRENT_CART
                 .FirstOrDefault(ci => ci.Book.BookID == selectedBook.BookID);
 
@@ -110,10 +180,14 @@ namespace BookCollection
                 DummyGlobalInfo.CURRENT_CART.Add(new CartItem(selectedBook, 1));
             }
 
+            selectedBook.quantity--;
+            selectedItem.SubItems[3].Text = selectedBook.quantity > 0 ? "Available" : "Out of Stock";
+            selectedItem.SubItems[4].Text = selectedBook.quantity.ToString();
+
             MessageBox.Show($"{selectedBook.Title} has been added to your cart!",
-                   "Item Added",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Information);
+                            "Item Added",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
         }
 
         private void searchBtn_Click(object sender, EventArgs e)
