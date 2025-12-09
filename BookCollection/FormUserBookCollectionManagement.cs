@@ -1,3 +1,4 @@
+using BookCollection.DatabaseClasses.Repositories;
 using BookCollection.ObjectClasses;
 using System.Linq;
 
@@ -5,6 +6,7 @@ namespace BookCollection
 {
     public partial class FormUserBookCollectionManagement : Form
     {
+        List<Book> all_books = new List<Book>();
         public FormUserBookCollectionManagement()
         {
             this.MaximizeBox = false;
@@ -28,26 +30,32 @@ namespace BookCollection
 
 
 
-            LoadBooksFromDummyList();
+            LoadBooks();
 
         }
 
-        private void LoadBooksFromDummyList()
+        private void LoadBooks()
+        {
+            all_books.Clear();
+            all_books = BookRepository.GetAll();
+            UpdateUI();
+        }
+
+        private void UpdateUI()
         {
             resultsListView.Items.Clear();
-            for (int i = 0; i < DummyGlobalInfo.ALL_BOOKS.Count; i++)
+
+
+            for (int i = 0; i < all_books.Count; i++)
             {
-                Book book = DummyGlobalInfo.ALL_BOOKS[i];
+                Book book = all_books[i];
                 ListViewItem item = new ListViewItem(book.Title);
                 item.SubItems.Add(book.BookID);
                 item.SubItems.Add(book.Author);
                 item.SubItems.Add(book.quantity > 0 ? "Available" : "Out of Stock");
                 item.SubItems.Add(book.quantity.ToString());
 
-                item.Tag = book;
-
                 resultsListView.Items.Add(item);
-
             }
         }
 
@@ -110,7 +118,50 @@ namespace BookCollection
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            //DATABASE NEEDED 
+            string searchText = bookNameTxtBox.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                LoadBooks();
+                return;
+            }
+
+            var sortedBooks = all_books
+                .Select(book => new
+                {
+                    Book = book,
+                    Score = CalculateSimilarity(book, searchText)
+                })
+                .OrderByDescending(x => x.Score)
+                .Where(x => x.Score > 0)
+                .Select(x => x.Book)
+                .ToList();
+
+            UpdateUI();
+        }
+
+        private int CalculateSimilarity(Book book, string searchText)
+        {
+            int score = 0;
+
+            if (book.Title.ToLower() == searchText)
+                score += 1000;
+
+            string[] searchWords = searchText.Split(' ');
+            string[] titleWords = book.Title.ToLower().Split(' ');
+
+            foreach (string searchWord in searchWords)
+            {
+                foreach (string titleWord in titleWords)
+                {
+                    if (titleWord == searchWord)
+                        score += 50;
+                    else if (titleWord.StartsWith(searchWord))
+                        score += 25;
+                }
+            }
+
+            return score;
         }
 
         private void adminButton_Click(object sender, EventArgs e)

@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BookCollection.DatabaseClasses.Repositories;
+using BookCollection.ObjectClasses;
 
 namespace BookCollection
 {
@@ -18,6 +20,7 @@ namespace BookCollection
 
         public FormEditRecord()
         {
+            book = bookToEdit;
             this.StartPosition = FormStartPosition.Manual;
 
             int screenW = Screen.PrimaryScreen.WorkingArea.Width;
