@@ -124,8 +124,22 @@ namespace BookCollection
 
         private void editRecordBtn_Click(object sender, EventArgs e)
         {
-            FormEditRecord editRecord = new FormEditRecord();
-            editRecord.ShowDialog();
+            ListViewItem selectedItem = resultsListView.SelectedItems[0];
+
+            string bookID = selectedItem.SubItems[1].Text;
+            Book? book = null;
+            foreach(Book b in all_books){
+                if(b.BookID == bookID)
+                {
+                    book = b;
+                    break;
+                }
+            }
+            if (book != null)
+            {
+                FormEditRecord editRecord = new FormEditRecord(book);
+                editRecord.ShowDialog();
+            }
         }
 
         private void deleteRecordBtn_Click(object sender, EventArgs e)

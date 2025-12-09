@@ -7,13 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BookCollection.DatabaseClasses.Repositories;
+using BookCollection.ObjectClasses;
 
 namespace BookCollection
 {
     public partial class FormEditRecord : Form
     {
-        public FormEditRecord()
+        Book book;
+        public FormEditRecord(Book bookToEdit)
         {
+            book = bookToEdit;
             this.StartPosition = FormStartPosition.Manual;
 
             int screenW = Screen.PrimaryScreen.WorkingArea.Width;
@@ -33,18 +37,18 @@ namespace BookCollection
         private void EditRecord_Load(object sender, EventArgs e)
         {
             //Will be filled with BookObj Info. 
-            titleTextBox.Text = "Test Book Title";
-            isbnTextBox.Text = "1234567890";
-            authorTextBox.Text = "John Doe";
-            PubDatePicker.Text = "01/01/2025";
-            dateAddedTimePicker.Text = "01/02/2025";
-            publisherTextBox.Text = "Test Publisher";
-            numPagesTextBox.Text = "350";
-            bookIDTextBox.Text = "1001";
-            quantTextBox.Text = "5";
-            priceTextBox.Text = "19.99";
-            genreTextBox.Text = "Fiction";
-            bookTypeTextBox.Text = "Paperback";
+            titleTextBox.Text = book.Title;
+            isbnTextBox.Text = book.ISBN;
+            authorTextBox.Text = book.Author;
+            PubDatePicker.Value = book.PublishDate;
+            dateAddedTimePicker.Value = book.DateAdded;
+            publisherTextBox.Text = book.Publisher;
+            numPagesTextBox.Text = book.NumOfPages.ToString();
+            bookIDTextBox.Text = book.BookID;
+            quantTextBox.Text = book.quantity.ToString();
+            priceTextBox.Text = book.Price.ToString();
+            genreTextBox.Text = book.Genre;
+            bookTypeTextBox.Text = book.BookType;
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -91,6 +95,22 @@ namespace BookCollection
             $"Price: {priceTextBox.Text}\n" +
             $"Genre: {genreTextBox.Text}\n" +
             $"Book Type: {bookTypeTextBox.Text}");
+
+            book = new Book(
+                titleTextBox.Text,                                  // title
+                isbnTextBox.Text,                                   // ISBN
+                authorTextBox.Text,                                 // author
+                PubDatePicker.Value,                                // publishDate
+                dateAddedTimePicker.Value,                          // dateAdded
+                publisherTextBox.Text,                              // publisher
+                int.Parse(numPagesTextBox.Text),                    // numOfPages
+                bookIDTextBox.Text,                                 // bookID
+                decimal.Parse(priceTextBox.Text),                   // price
+                genreTextBox.Text,                                  // genre
+                bookTypeTextBox.Text,                               // bookType
+                int.Parse(quantTextBox.Text)                        // quantity
+            );
+            BookRepository.Update(book);
 
             this.Close();
         }
