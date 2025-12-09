@@ -16,6 +16,8 @@ namespace BookCollection
 {
     public partial class FormAdminDirectory : Form
     {
+        List<Store> stores;
+        List<Employee> employees;
 
         public FormAdminDirectory()
         {
@@ -28,12 +30,28 @@ namespace BookCollection
 
         public void refreshStoreListBox()
         {
-            this.storeListBox.DataSource = StoreRepository.GetAll().Select(s => s.name).ToList();
+            stores = StoreRepository.GetAll();
+
+            this.storeListBox.DataSource = null;
+            this.storeListBox.DataSource = stores;
+
+            this.storeListBox.DisplayMember = "name";
         }
 
         public void refreshEmployeeListBox()
         {
-            this.employeeListBox.DataSource = EmployeeRepository.GetAll().Select(e => e.Name).ToList();
+            employees = EmployeeRepository.GetAll();
+
+            this.employeeListBox.DataSource = null;
+            this.employeeListBox.DataSource = employees;
+
+            this.employeeListBox.DisplayMember = "Name";
+        }
+
+        private void refreshEventWrapper(object sender, EventArgs e)
+        {
+            refreshStoreListBox();
+            refreshEmployeeListBox();
         }
 
         private void storeAdd_Click(object sender, EventArgs e)
@@ -43,24 +61,24 @@ namespace BookCollection
             newStore.ShowDialog();
         }
 
-        private void refreshEventWrapper(object sender, EventArgs e)
-        {
-            refreshStoreListBox();
-        }
-
         private void storeRemove_Click(object sender, EventArgs e)
         {
-            StoreRepository.Delete(((Store)this.storeListBox.SelectedItem).storeId);
+            if (this.storeListBox.SelectedItem == null) return;
+
+            Store selected = (Store)this.storeListBox.SelectedItem;
+
+            StoreRepository.Delete(selected.storeId);
             refreshStoreListBox();
         }
 
         private void storeEdit_Click(object sender, EventArgs e)
         {
-            if(this.storeListBox.SelectedItem == null)
+            if (this.storeListBox.SelectedItem == null)
             {
                 MessageBox.Show("No store selected!");
                 return;
             }
+
             FormAddStore editStore = new FormAddStore((Store)this.storeListBox.SelectedItem);
             editStore.FormClosed += refreshEventWrapper;
             editStore.ShowDialog();
@@ -75,17 +93,23 @@ namespace BookCollection
 
         private void employeeRemove_Click(object sender, EventArgs e)
         {
-            EmployeeRepository.Delete(((Employee)this.employeeListBox.SelectedItem).EmployeeID);
-            refreshStoreListBox();
+            if (this.employeeListBox.SelectedItem == null) return;
+
+            Employee selected = (Employee)this.employeeListBox.SelectedItem;
+
+            EmployeeRepository.Delete(selected.EmployeeID);
+
+            refreshEmployeeListBox();
         }
 
         private void employeeEdit_Click(object sender, EventArgs e)
         {
-            if (this.storeListBox.SelectedItem == null)
+            if (this.employeeListBox.SelectedItem == null)
             {
-                MessageBox.Show("No store selected!");
+                MessageBox.Show("No employee selected!");
                 return;
             }
+
             FormAddEmployee editEmployee = new FormAddEmployee((Employee)this.employeeListBox.SelectedItem);
             editEmployee.FormClosed += refreshEventWrapper;
             editEmployee.ShowDialog();

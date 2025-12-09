@@ -49,6 +49,16 @@ namespace BookCollection
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(nameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(addressTextBox.Text) ||
+                string.IsNullOrWhiteSpace(cityTextBox.Text) ||
+                string.IsNullOrWhiteSpace(stateTextBox.Text) ||
+                string.IsNullOrWhiteSpace(zipTextBox.Text))
+            {
+                MessageBox.Show("All fields must be filled out.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; 
+            }
+
             if (isEditMode)
             {
                 selectedStore.address = this.addressTextBox.Text;
@@ -68,7 +78,9 @@ namespace BookCollection
                     nameTextBox.Text
                     );
                 StoreRepository.Add(store);
-            } 
+            }
+
+            this.DialogResult = DialogResult.OK;
             Close();
         }
 

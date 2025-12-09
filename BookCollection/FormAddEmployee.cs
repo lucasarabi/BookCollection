@@ -49,21 +49,43 @@ namespace BookCollection
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(nameTextBox.Text))
+            {
+                MessageBox.Show("Please enter a Name.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(payMaskedTextBox.Text))
+            {
+                MessageBox.Show("Please enter a Pay amount.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; 
+            }
+
+            if (!decimal.TryParse(payMaskedTextBox.Text, out decimal parsedPay))
+            {
+                MessageBox.Show("Pay must be a valid number.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (isEditMode)
             {
                 selectedEmployee.Name = this.nameTextBox.Text;
                 selectedEmployee.Birthday = this.birthdayDatePicker.Value;
+                selectedEmployee.pay = parsedPay;
+
                 EmployeeRepository.Update(selectedEmployee);
             }
             else
             {
                 Employee employee = new Employee(
                     nameTextBox.Text,
-                    decimal.Parse(payMaskedTextBox.Text),
+                    parsedPay, 
                     birthdayDatePicker.Value
                     );
                 EmployeeRepository.Add(employee);
             }
+
+            this.DialogResult = DialogResult.OK;
             Close();
         }
 

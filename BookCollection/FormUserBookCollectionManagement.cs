@@ -131,11 +131,6 @@ namespace BookCollection
             selectedBook.quantity--;
             selectedItem.SubItems[3].Text = selectedBook.quantity > 0 ? "Available" : "Out of Stock";
             selectedItem.SubItems[4].Text = selectedBook.quantity.ToString();
-
-            MessageBox.Show($"{selectedBook.Title} has been added to your cart!",
-                            "Item Added",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
         }
 
         private void searchBtn_Click(object sender, EventArgs e)

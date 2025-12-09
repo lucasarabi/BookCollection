@@ -86,7 +86,7 @@
             addressTextBox.MaxLength = 50;
             addressTextBox.Name = "addressTextBox";
             addressTextBox.Size = new Size(191, 23);
-            addressTextBox.TabIndex = 4;
+            addressTextBox.TabIndex = 1;
             // 
             // stateTextBox
             // 
@@ -95,7 +95,7 @@
             stateTextBox.MaxLength = 15;
             stateTextBox.Name = "stateTextBox";
             stateTextBox.Size = new Size(191, 23);
-            stateTextBox.TabIndex = 5;
+            stateTextBox.TabIndex = 3;
             // 
             // cityTextBox
             // 
@@ -104,7 +104,7 @@
             cityTextBox.MaxLength = 25;
             cityTextBox.Name = "cityTextBox";
             cityTextBox.Size = new Size(191, 23);
-            cityTextBox.TabIndex = 6;
+            cityTextBox.TabIndex = 2;
             // 
             // nameTextBox
             // 
@@ -113,7 +113,7 @@
             nameTextBox.MaxLength = 25;
             nameTextBox.Name = "nameTextBox";
             nameTextBox.Size = new Size(191, 23);
-            nameTextBox.TabIndex = 7;
+            nameTextBox.TabIndex = 5;
             // 
             // zipTextBox
             // 
@@ -122,7 +122,7 @@
             zipTextBox.MaxLength = 15;
             zipTextBox.Name = "zipTextBox";
             zipTextBox.Size = new Size(191, 23);
-            zipTextBox.TabIndex = 9;
+            zipTextBox.TabIndex = 4;
             // 
             // zipLabel
             // 
@@ -139,7 +139,7 @@
             saveButton.Margin = new Padding(3, 2, 3, 2);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(82, 32);
-            saveButton.TabIndex = 10;
+            saveButton.TabIndex = 6;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
             saveButton.Click += saveButton_Click;
@@ -150,7 +150,7 @@
             clearButton.Margin = new Padding(3, 2, 3, 2);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(82, 32);
-            clearButton.TabIndex = 11;
+            clearButton.TabIndex = 7;
             clearButton.Text = "Clear";
             clearButton.UseVisualStyleBackColor = true;
             clearButton.Click += clearButton_Click;
@@ -161,7 +161,7 @@
             exitButton.Margin = new Padding(3, 2, 3, 2);
             exitButton.Name = "exitButton";
             exitButton.Size = new Size(82, 32);
-            exitButton.TabIndex = 12;
+            exitButton.TabIndex = 8;
             exitButton.Text = "Exit";
             exitButton.UseVisualStyleBackColor = true;
             exitButton.Click += exitButton_Click;

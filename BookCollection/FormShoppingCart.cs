@@ -98,10 +98,6 @@ namespace BookCollection
                     flpCartItems.Controls.Remove(item);
                     UpdateTotals();
 
-                    MessageBox.Show("Item removed from cart.",
-                                    "Removed",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
                 };
 
                 flpCartItems.Controls.Add(item);

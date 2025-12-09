@@ -16,7 +16,7 @@ namespace BookCollection.Repsitories
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                string sql = "INSERT INTO Employees (EmployeeID, Name, Pay, Birthday) VALUES (@name, @pay, @dob)";
+                string sql = "INSERT INTO Employees (Name, Pay, Birthday) VALUES (@name, @pay, @dob)";
 
                 using (var cmd = new SqlCommand(sql, conn))
                 {
@@ -33,11 +33,7 @@ namespace BookCollection.Repsitories
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                string sql = @"UPDATE Employees 
-                               SET Name = @name, 
-                                   Pay = @pay, 
-                                   Birthday = @dob 
-                               WHERE EmployeeID = @id";
+                string sql = @"UPDATE Employees SET Name = @name, Pay = @pay, Birthday = @dob WHERE EmployeeID = @id";
 
                 using (var cmd = new SqlCommand(sql, conn))
                 {
@@ -64,6 +60,7 @@ namespace BookCollection.Repsitories
                     {
                         list.Add(new Employee
                         {
+                            EmployeeID = (int)reader["EmployeeID"],
                             Name = reader["Name"].ToString(),
                             pay = (decimal)reader["Pay"],
                             Birthday = (DateTime)reader["Birthday"]
@@ -73,7 +70,6 @@ namespace BookCollection.Repsitories
             }
             return list;
         }
-
         public static void Delete(int employeeId)
         {
             using (var conn = DatabaseHelper.GetConnection())
