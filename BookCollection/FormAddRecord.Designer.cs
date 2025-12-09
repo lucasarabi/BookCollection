@@ -180,6 +180,7 @@
             // 
             bookIDTextBox.Location = new Point(109, 308);
             bookIDTextBox.Name = "bookIDTextBox";
+            bookIDTextBox.ReadOnly = true;
             bookIDTextBox.Size = new Size(299, 23);
             bookIDTextBox.TabIndex = 16;
             // 

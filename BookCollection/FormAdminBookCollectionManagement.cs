@@ -30,9 +30,30 @@ namespace BookCollection
             resultsListView.Columns.Add("Author", 150, HorizontalAlignment.Left);
             resultsListView.Columns.Add("Status", -2, HorizontalAlignment.Left);
             resultsListView.Columns.Add("Quantity", 60, HorizontalAlignment.Left);
+            resultsListView.Columns.Add("Price", 80, HorizontalAlignment.Left);
 
+            RefreshBookList();
             LoadBooks();
 
+        }
+
+        public void RefreshBookList()
+        {
+            var books = BookRepository.GetAll();
+
+            resultsListView.Items.Clear();
+
+            foreach (var book in books)
+            {
+                ListViewItem item = new ListViewItem(book.Title);
+                item.SubItems.Add(book.BookID);
+                item.SubItems.Add(book.Author);
+                item.SubItems.Add(book.quantity > 0 ? "Available" : "Out of Stock");
+                item.SubItems.Add(book.quantity.ToString());
+                item.SubItems.Add(book.Price.ToString("C"));
+
+                resultsListView.Items.Add(item);
+            }
         }
 
         private void LoadBooks()
@@ -55,6 +76,9 @@ namespace BookCollection
                 item.SubItems.Add(book.Author);
                 item.SubItems.Add(book.quantity > 0 ? "Available" : "Out of Stock");
                 item.SubItems.Add(book.quantity.ToString());
+                item.SubItems.Add(book.Price.ToString("C"));
+
+                item.Tag = book;
 
                 resultsListView.Items.Add(item);
             }
@@ -175,11 +199,27 @@ namespace BookCollection
 
         private void deleteAllRecordsBtn_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete ALL books?\nThis action cannot be undone.",
+                "Confirm Delete All",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
+
             foreach (Book book in all_books)
             {
                 BookRepository.Delete(book.BookID);
             }
+
             LoadBooks();
+
+            MessageBox.Show("All books have been deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void OpenAdminDirectoryButton_Click(object sender, EventArgs e)
@@ -198,6 +238,11 @@ namespace BookCollection
         private void FormAdminBookCollectionManagement_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void RefreshListButton_Click(object sender, EventArgs e)
+        {
+            RefreshBookList();
         }
     }
 }

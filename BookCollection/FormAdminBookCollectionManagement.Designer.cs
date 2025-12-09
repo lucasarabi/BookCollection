@@ -46,12 +46,14 @@
             authorNameLabel = new Label();
             isbnLabel = new Label();
             bookNameLabel = new Label();
+            RefreshListButton = new Button();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(RefreshListButton);
             groupBox2.Controls.Add(OpenAdminDirectoryButton);
             groupBox2.Controls.Add(deleteAllRecordsBtn);
             groupBox2.Controls.Add(deleteRecordBtn);
@@ -60,7 +62,7 @@
             groupBox2.Controls.Add(resultsListView);
             groupBox2.Location = new Point(222, 12);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(566, 426);
+            groupBox2.Size = new Size(658, 426);
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Admin Panel";
@@ -119,7 +121,7 @@
             // 
             resultsListView.Location = new Point(6, 105);
             resultsListView.Name = "resultsListView";
-            resultsListView.Size = new Size(554, 315);
+            resultsListView.Size = new Size(632, 315);
             resultsListView.TabIndex = 0;
             resultsListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -226,13 +228,26 @@
             bookNameLabel.TabIndex = 1;
             bookNameLabel.Text = "Book Name:";
             // 
+            // RefreshListButton
+            // 
+            RefreshListButton.Font = new Font("Segoe UI", 15F);
+            RefreshListButton.Location = new Point(594, 39);
+            RefreshListButton.Name = "RefreshListButton";
+            RefreshListButton.Size = new Size(35, 34);
+            RefreshListButton.TabIndex = 13;
+            RefreshListButton.Text = "🔄️";
+            RefreshListButton.TextAlign = ContentAlignment.BottomCenter;
+            RefreshListButton.UseVisualStyleBackColor = true;
+            RefreshListButton.Click += RefreshListButton_Click;
+            // 
             // FormAdminBookCollectionManagement
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(892, 450);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             Name = "FormAdminBookCollectionManagement";
             Text = "AdminBookCollectionManagement";
             Load += FormAdminBookCollectionManagement_Load;
@@ -262,5 +277,6 @@
         private Label isbnLabel;
         private Label bookNameLabel;
         private Button OpenAdminDirectoryButton;
+        private Button RefreshListButton;
     }
 }

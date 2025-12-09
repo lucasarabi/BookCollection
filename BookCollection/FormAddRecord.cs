@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,7 +24,10 @@ namespace BookCollection
 
             InitializeComponent();
 
-            
+            DateAddedTimePicker.Value = DateTime.Now;
+            PubDatePicker.Value = DateTime.Now;
+            bookIDTextBox.Text = BookRepository.GetNextBookID();
+
         }
 
         private void AddRecord_Load(object sender, EventArgs e){}
@@ -72,9 +76,10 @@ namespace BookCollection
             this.Close();
             
         }
+
+
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Cancel button clicked.");
             this.Close();
         }
 

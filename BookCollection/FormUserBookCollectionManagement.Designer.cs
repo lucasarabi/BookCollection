@@ -41,6 +41,7 @@
             isbnLabel = new Label();
             bookNameLabel = new Label();
             groupBox2 = new GroupBox();
+            RefreshListButton = new Button();
             viewCartBtn = new Button();
             addToCartBtn = new Button();
             resultsListView = new ListView();
@@ -164,19 +165,32 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(RefreshListButton);
             groupBox2.Controls.Add(viewCartBtn);
             groupBox2.Controls.Add(addToCartBtn);
             groupBox2.Controls.Add(resultsListView);
             groupBox2.Location = new Point(222, 12);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(566, 426);
+            groupBox2.Size = new Size(655, 413);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Results";
             // 
+            // RefreshListButton
+            // 
+            RefreshListButton.Font = new Font("Segoe UI", 15F);
+            RefreshListButton.Location = new Point(604, 368);
+            RefreshListButton.Name = "RefreshListButton";
+            RefreshListButton.Size = new Size(35, 34);
+            RefreshListButton.TabIndex = 12;
+            RefreshListButton.Text = "🔄️";
+            RefreshListButton.TextAlign = ContentAlignment.BottomCenter;
+            RefreshListButton.UseVisualStyleBackColor = true;
+            RefreshListButton.Click += RefreshListButton_Click;
+            // 
             // viewCartBtn
             // 
-            viewCartBtn.Location = new Point(368, 377);
+            viewCartBtn.Location = new Point(336, 375);
             viewCartBtn.Name = "viewCartBtn";
             viewCartBtn.Size = new Size(192, 26);
             viewCartBtn.TabIndex = 11;
@@ -186,7 +200,7 @@
             // 
             // addToCartBtn
             // 
-            addToCartBtn.Location = new Point(6, 377);
+            addToCartBtn.Location = new Point(90, 373);
             addToCartBtn.Name = "addToCartBtn";
             addToCartBtn.Size = new Size(192, 26);
             addToCartBtn.TabIndex = 10;
@@ -198,7 +212,7 @@
             // 
             resultsListView.Location = new Point(6, 22);
             resultsListView.Name = "resultsListView";
-            resultsListView.Size = new Size(554, 332);
+            resultsListView.Size = new Size(633, 332);
             resultsListView.TabIndex = 0;
             resultsListView.UseCompatibleStateImageBehavior = false;
             resultsListView.SelectedIndexChanged += resultsListView_SelectedIndexChanged;
@@ -207,7 +221,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(895, 445);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -238,5 +252,6 @@
         private Button viewCartBtn;
         private Button addToCartBtn;
         private Button adminButton;
+        private Button RefreshListButton;
     }
 }

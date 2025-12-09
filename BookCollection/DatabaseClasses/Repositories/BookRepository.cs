@@ -17,12 +17,11 @@ namespace BookCollection.DatabaseClasses.Repositories
             using (var conn = DatabaseHelper.GetConnection())
             {
                 conn.Open();
-                string sql = @"INSERT INTO Books (BookID, Title, ISBN, Author, PublishDate, DateAdded, Publisher, NumOfPages, Price, Genre, BookType, Quantity) 
-                               VALUES (@id, @title, @isbn, @author, @pDate, @dAdded, @pub, @pages, @price, @genre, @type, @qty)";
+                string sql = @"INSERT INTO Books (Title, ISBN, Author, PublishDate, DateAdded, Publisher, NumOfPages, Price, Genre, BookType, Quantity)
+                                VALUES (@title, @isbn, @author, @pDate, @dAdded, @pub, @pages, @price, @genre, @type, @qty)";    
 
                 using (var cmd = new SqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", book.BookID);
                     cmd.Parameters.AddWithValue("@title", book.Title);
                     cmd.Parameters.AddWithValue("@isbn", book.ISBN);
                     cmd.Parameters.AddWithValue("@author", book.Author);
@@ -35,7 +34,11 @@ namespace BookCollection.DatabaseClasses.Repositories
                     cmd.Parameters.AddWithValue("@type", book.BookType);
                     cmd.Parameters.AddWithValue("@qty", book.quantity);
 
-                    cmd.ExecuteNonQuery();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        book.BookID = result.ToString();  // Example: B001, B002, ...
+                    }
                 }
             }
         }
@@ -110,6 +113,21 @@ namespace BookCollection.DatabaseClasses.Repositories
             }
 
             return null; 
+        }
+        public static string GetNextBookID()
+        {
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+
+                string sql = "SELECT IDENT_CURRENT('Books') + 1";
+
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    int nextNum = Convert.ToInt32(cmd.ExecuteScalar());
+                    return "B" + nextNum.ToString("D3");
+                }
+            }
         }
 
         public static void Update(Book book)
