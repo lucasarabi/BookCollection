@@ -46,29 +46,26 @@
             pnlBorder.Controls.Add(btnQtyMinus);
             pnlBorder.Controls.Add(lblBookDetails);
             pnlBorder.Controls.Add(lblBookTitle);
-            pnlBorder.Location = new Point(3, 4);
-            pnlBorder.Margin = new Padding(3, 4, 3, 4);
+            pnlBorder.Location = new Point(3, 3);
             pnlBorder.Name = "pnlBorder";
-            pnlBorder.Size = new Size(384, 93);
+            pnlBorder.Size = new Size(336, 70);
             pnlBorder.TabIndex = 0;
             // 
             // btnRemoveItem
             // 
-            btnRemoveItem.Location = new Point(341, 31);
-            btnRemoveItem.Margin = new Padding(3, 4, 3, 4);
+            btnRemoveItem.Image = Properties.Resources.trashcan1;
+            btnRemoveItem.Location = new Point(292, 12);
             btnRemoveItem.Name = "btnRemoveItem";
-            btnRemoveItem.Size = new Size(33, 31);
+            btnRemoveItem.Size = new Size(40, 40);
             btnRemoveItem.TabIndex = 6;
-            btnRemoveItem.Text = "(0)";
             btnRemoveItem.UseVisualStyleBackColor = true;
             btnRemoveItem.Click += btnRemoveItem_Click;
             // 
             // btnQtyPlus
             // 
-            btnQtyPlus.Location = new Point(296, 28);
-            btnQtyPlus.Margin = new Padding(3, 4, 3, 4);
+            btnQtyPlus.Location = new Point(262, 21);
             btnQtyPlus.Name = "btnQtyPlus";
-            btnQtyPlus.Size = new Size(27, 31);
+            btnQtyPlus.Size = new Size(24, 23);
             btnQtyPlus.TabIndex = 4;
             btnQtyPlus.Text = "+";
             btnQtyPlus.UseVisualStyleBackColor = true;
@@ -76,18 +73,17 @@
             // 
             // lblQuantity
             // 
-            lblQuantity.Location = new Point(269, 33);
+            lblQuantity.Location = new Point(238, 25);
             lblQuantity.Name = "lblQuantity";
-            lblQuantity.Size = new Size(31, 31);
+            lblQuantity.Size = new Size(27, 23);
             lblQuantity.TabIndex = 3;
             lblQuantity.Text = "(#)";
             // 
             // btnQtyMinus
             // 
-            btnQtyMinus.Location = new Point(235, 28);
-            btnQtyMinus.Margin = new Padding(3, 4, 3, 4);
+            btnQtyMinus.Location = new Point(209, 21);
             btnQtyMinus.Name = "btnQtyMinus";
-            btnQtyMinus.Size = new Size(29, 31);
+            btnQtyMinus.Size = new Size(25, 23);
             btnQtyMinus.TabIndex = 2;
             btnQtyMinus.Text = "-";
             btnQtyMinus.UseVisualStyleBackColor = true;
@@ -95,29 +91,28 @@
             // 
             // lblBookDetails
             // 
-            lblBookDetails.Location = new Point(7, 40);
+            lblBookDetails.Location = new Point(6, 30);
             lblBookDetails.Name = "lblBookDetails";
-            lblBookDetails.Size = new Size(222, 45);
+            lblBookDetails.Size = new Size(194, 34);
             lblBookDetails.TabIndex = 1;
             lblBookDetails.Text = "(book details)";
             // 
             // lblBookTitle
             // 
             lblBookTitle.AutoSize = true;
-            lblBookTitle.Location = new Point(7, 8);
+            lblBookTitle.Location = new Point(6, 6);
             lblBookTitle.Name = "lblBookTitle";
-            lblBookTitle.Size = new Size(83, 20);
+            lblBookTitle.Size = new Size(65, 15);
             lblBookTitle.TabIndex = 0;
             lblBookTitle.Text = "(Book title)";
             // 
             // CartItemControl
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(pnlBorder);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "CartItemControl";
-            Size = new Size(391, 100);
+            Size = new Size(342, 75);
             pnlBorder.ResumeLayout(false);
             pnlBorder.PerformLayout();
             ResumeLayout(false);

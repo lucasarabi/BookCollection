@@ -201,6 +201,7 @@
             resultsListView.Size = new Size(554, 332);
             resultsListView.TabIndex = 0;
             resultsListView.UseCompatibleStateImageBehavior = false;
+            resultsListView.SelectedIndexChanged += resultsListView_SelectedIndexChanged;
             // 
             // FormUserBookCollectionManagement
             // 
