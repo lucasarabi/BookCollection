@@ -50,7 +50,8 @@ namespace BookCollection
 
         private void storeRemove_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Alert", "Removing store");
+            StoreRepository.Delete(((Store)this.storeListBox.SelectedItem).storeId);
+            refreshStoreListBox();
         }
 
         private void storeEdit_Click(object sender, EventArgs e)
@@ -74,7 +75,8 @@ namespace BookCollection
 
         private void employeeRemove_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Alert", "Removing employee");
+            EmployeeRepository.Delete(((Employee)this.employeeListBox.SelectedItem).EmployeeID);
+            refreshStoreListBox();
         }
 
         private void employeeEdit_Click(object sender, EventArgs e)

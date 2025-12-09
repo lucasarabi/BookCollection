@@ -32,31 +32,20 @@ namespace BookCollection
             UpdateTotals();
         }
 
-        // The model representing a book in the cart
         public class BookItem
         {
             public string Title { get; set; } = "";
             public string Details { get; set; } = "";
             public int Quantity { get; set; }
-            public decimal Price { get; set; } = 10.00m; // TEMP default
+            public decimal Price { get; set; } = 10.00m; 
         }
 
-        // Fake test data — remove when real DB is connected
-        //public static List<BookItem> TestBooks = new List<BookItem>
-        //{
-        //    new BookItem { Title = "Book A", Details = "Author: John", Quantity = 1, Price = 10 },
-        //    new BookItem { Title = "Book B", Details = "Author: Sarah", Quantity = 2, Price = 15 },
-        //    new BookItem { Title = "Book C", Details = "Author: Mike", Quantity = 1, Price = 12 },
-        //};
-
-        // LOAD CART
         private void LoadCart()
         {
             flpCartItems.Controls.Clear();
 
             foreach (var cartItem in DummyGlobalInfo.CURRENT_CART)
             {
-                // convert your CartItem -> the BookItem model used by the control
                 var bookItem = new BookItem
                 {
                     Title = cartItem.Book.Title,
@@ -74,7 +63,7 @@ namespace BookCollection
                     if (cartItem.Book.quantity <= 0)
                     {
                         
-                        item.Quantity--;  // undo label increment
+                        item.Quantity--;  
                         MessageBox.Show("No more copies of this book are available.",
                                         "Out of Stock",
                                         MessageBoxButtons.OK,
@@ -92,10 +81,9 @@ namespace BookCollection
 
                 item.QuantityDecreased += (s, e) =>
                 {
-                    // user clicked - ; CartItemControl already decremented its label
 
                     cartItem.Quantity--;
-                    cartItem.Book.quantity++;   // ✅ return 1 copy to stock
+                    cartItem.Book.quantity++; 
 
                     bookItem.Quantity = cartItem.Quantity;
                     UpdateTotals();
@@ -120,10 +108,8 @@ namespace BookCollection
             }
         }
 
-        // UPDATE TOTALS
         private void UpdateTotals()
         {
-            // if cart is empty, avoid errors
             if (DummyGlobalInfo.CURRENT_CART == null || DummyGlobalInfo.CURRENT_CART.Count == 0)
             {
                 lblSubtotalValue.Text = 0m.ToString("C");
@@ -135,7 +121,7 @@ namespace BookCollection
             decimal subtotal = DummyGlobalInfo.CURRENT_CART
                 .Sum(ci => ci.Book.Price * ci.Quantity);
 
-            decimal tax = subtotal * 0.07m;   // 7% tax – adjust if needed
+            decimal tax = subtotal * 0.07m;   
             decimal total = subtotal + tax;
 
             lblSubtotalValue.Text = subtotal.ToString("C");
@@ -168,18 +154,15 @@ namespace BookCollection
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-            // Close the shopping cart window
             this.Close();
         }
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            // Calculate totals from CURRENT_CART
             decimal subtotal = DummyGlobalInfo.CURRENT_CART.Sum(ci => ci.Book.Price * ci.Quantity);
-            decimal tax = subtotal * 0.07m;   // 7% tax or your tax rate
+            decimal tax = subtotal * 0.07m;   
             decimal total = subtotal + tax;
 
-            // Show popup with total
             MessageBox.Show(
                 $"Checkout complete!\n\nTotal: {total:C}",
                 "Checkout Successful",
@@ -187,15 +170,12 @@ namespace BookCollection
                 MessageBoxIcon.Information
             );
 
-            // OPTIONAL: Clear cart after checkout
             DummyGlobalInfo.CURRENT_CART.Clear();
             flpCartItems.Controls.Clear();
             UpdateTotals();
 
-            // Close the shopping cart page
             this.Close();
         }
-
 
         private void FormShoppingCart_Load(object sender, EventArgs e)
         {

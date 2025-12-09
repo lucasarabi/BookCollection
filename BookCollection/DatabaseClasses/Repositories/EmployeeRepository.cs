@@ -74,7 +74,7 @@ namespace BookCollection.Repsitories
             return list;
         }
 
-        public static void Delete(string employeeId)
+        public static void Delete(int employeeId)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
