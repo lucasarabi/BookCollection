@@ -155,9 +155,10 @@ namespace BookCollection
                     Score = CalculateSimilarity(book, searchText)
                 })
                 .OrderByDescending(x => x.Score)
-                .Where(x => x.Score > 0)
                 .Select(x => x.Book)
                 .ToList();
+
+            all_books = sortedBooks;
 
             UpdateUI();
         }
@@ -168,6 +169,22 @@ namespace BookCollection
 
             if (book.Title.ToLower() == searchText)
                 score += 1000;
+            else if (book.Title.ToLower().StartsWith(searchText))
+                score += 500;
+            else if (book.Title.ToLower().Contains(searchText))
+                score += 250;
+            if (book.Author.ToLower() == searchText)
+                score += 800;
+            else if (book.Author.ToLower().Contains(searchText))
+                score += 200;
+            if (book.ISBN.ToLower().Contains(searchText))
+                score += 300;
+            if (book.Genre.ToLower().Contains(searchText))
+                score += 100;
+            if (book.Publisher.ToLower().Contains(searchText))
+                score += 100;
+            if (book.BookType.ToLower().Contains(searchText))
+                score += 100;
 
             string[] searchWords = searchText.Split(' ');
             string[] titleWords = book.Title.ToLower().Split(' ');
