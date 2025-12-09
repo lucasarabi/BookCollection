@@ -42,31 +42,78 @@ namespace BookCollection
         }
 
         // Fake test data — remove when real DB is connected
-        public static List<BookItem> TestBooks = new List<BookItem>
-        {
-            new BookItem { Title = "Book A", Details = "Author: John", Quantity = 1, Price = 10 },
-            new BookItem { Title = "Book B", Details = "Author: Sarah", Quantity = 2, Price = 15 },
-            new BookItem { Title = "Book C", Details = "Author: Mike", Quantity = 1, Price = 12 },
-        };
+        //public static List<BookItem> TestBooks = new List<BookItem>
+        //{
+        //    new BookItem { Title = "Book A", Details = "Author: John", Quantity = 1, Price = 10 },
+        //    new BookItem { Title = "Book B", Details = "Author: Sarah", Quantity = 2, Price = 15 },
+        //    new BookItem { Title = "Book C", Details = "Author: Mike", Quantity = 1, Price = 12 },
+        //};
 
         // LOAD CART
         private void LoadCart()
         {
             flpCartItems.Controls.Clear();
 
-            foreach (var book in TestBooks)
+            foreach (var cartItem in DummyGlobalInfo.CURRENT_CART)
             {
-                CartItemControl item = new CartItemControl();
-                item.LoadData(book);
+                // convert your CartItem -> the BookItem model used by the control
+                var bookItem = new BookItem
+                {
+                    Title = cartItem.Book.Title,
+                    Details = $"Author: {cartItem.Book.Author}",
+                    Quantity = cartItem.Quantity,
+                    Price = cartItem.Book.Price
+                };
 
-                // Subscribe to events
-                item.QuantityIncreased += (s, e) => { book.Quantity++; UpdateTotals(); };
-                item.QuantityDecreased += (s, e) => { book.Quantity--; UpdateTotals(); };
+                CartItemControl item = new CartItemControl();
+                item.LoadData(bookItem);
+
+                item.QuantityIncreased += (s, e) =>
+                {
+                    
+                    if (cartItem.Book.quantity <= 0)
+                    {
+                        
+                        item.Quantity--;  // undo label increment
+                        MessageBox.Show("No more copies of this book are available.",
+                                        "Out of Stock",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    
+                    cartItem.Quantity++;
+                    cartItem.Book.quantity--;
+
+                    bookItem.Quantity = cartItem.Quantity;
+                    UpdateTotals();
+                };
+
+                item.QuantityDecreased += (s, e) =>
+                {
+                    // user clicked - ; CartItemControl already decremented its label
+
+                    cartItem.Quantity--;
+                    cartItem.Book.quantity++;   // ✅ return 1 copy to stock
+
+                    bookItem.Quantity = cartItem.Quantity;
+                    UpdateTotals();
+                };
+
                 item.ItemRemoved += (s, e) =>
                 {
-                    TestBooks.Remove(book);
+                   
+                    cartItem.Book.quantity += cartItem.Quantity;
+
+                    DummyGlobalInfo.CURRENT_CART.Remove(cartItem);
                     flpCartItems.Controls.Remove(item);
                     UpdateTotals();
+
+                    MessageBox.Show("Item removed from cart.",
+                                    "Removed",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
                 };
 
                 flpCartItems.Controls.Add(item);
@@ -76,8 +123,19 @@ namespace BookCollection
         // UPDATE TOTALS
         private void UpdateTotals()
         {
-            decimal subtotal = TestBooks.Sum(b => b.Price * b.Quantity);
-            decimal tax = subtotal * 0.07m;
+            // if cart is empty, avoid errors
+            if (DummyGlobalInfo.CURRENT_CART == null || DummyGlobalInfo.CURRENT_CART.Count == 0)
+            {
+                lblSubtotalValue.Text = 0m.ToString("C");
+                lblTaxValue.Text = 0m.ToString("C");
+                lblTotalValue.Text = 0m.ToString("C");
+                return;
+            }
+
+            decimal subtotal = DummyGlobalInfo.CURRENT_CART
+                .Sum(ci => ci.Book.Price * ci.Quantity);
+
+            decimal tax = subtotal * 0.07m;   // 7% tax – adjust if needed
             decimal total = subtotal + tax;
 
             lblSubtotalValue.Text = subtotal.ToString("C");
@@ -88,20 +146,56 @@ namespace BookCollection
         // BUTTONS
         private void btnClearCart_Click(object sender, EventArgs e)
         {
-            TestBooks.Clear();
+            foreach (var cartItem in DummyGlobalInfo.CURRENT_CART)
+            {
+                cartItem.Book.quantity += cartItem.Quantity;
+            }
+
+            DummyGlobalInfo.CURRENT_CART.Clear();
             flpCartItems.Controls.Clear();
             UpdateTotals();
+
+            MessageBox.Show("Cart cleared.",
+                            "Cart Emptied",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
         }
 
         private void btnSaveCart_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Cart saved (placeholder).");
+            MessageBox.Show("Cart saved, returning to collection manager.",
+                    "Success",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+            // Close the shopping cart window
+            this.Close();
         }
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Checkout complete (placeholder).");
+            // Calculate totals from CURRENT_CART
+            decimal subtotal = DummyGlobalInfo.CURRENT_CART.Sum(ci => ci.Book.Price * ci.Quantity);
+            decimal tax = subtotal * 0.07m;   // 7% tax or your tax rate
+            decimal total = subtotal + tax;
+
+            // Show popup with total
+            MessageBox.Show(
+                $"Checkout complete!\n\nTotal: {total:C}",
+                "Checkout Successful",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+
+            // OPTIONAL: Clear cart after checkout
+            DummyGlobalInfo.CURRENT_CART.Clear();
+            flpCartItems.Controls.Clear();
+            UpdateTotals();
+
+            // Close the shopping cart page
+            this.Close();
         }
+
 
         private void FormShoppingCart_Load(object sender, EventArgs e)
         {

@@ -74,6 +74,44 @@ namespace BookCollection.DatabaseClasses.Repositories
             return list;
         }
 
+        public static Book? GetById(string bookID)
+        {
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                string sql = "SELECT * FROM Books WHERE BookID = @id";
+
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", bookID);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Book
+                            {
+                                BookID = reader["BookID"].ToString(),
+                                Title = reader["Title"].ToString(),
+                                ISBN = reader["ISBN"].ToString(),
+                                Author = reader["Author"].ToString(),
+                                PublishDate = (DateTime)reader["PublishDate"],
+                                DateAdded = (DateTime)reader["DateAdded"],
+                                Publisher = reader["Publisher"].ToString(),
+                                NumOfPages = (int)reader["NumOfPages"],
+                                Price = (decimal)reader["Price"],
+                                Genre = reader["Genre"].ToString(),
+                                BookType = reader["BookType"].ToString(),
+                                quantity = (int)reader["Quantity"]
+                            };
+                        }
+                    }
+                }
+            }
+
+            return null; 
+        }
+
         public static void Update(Book book)
         {
             using (var conn = DatabaseHelper.GetConnection())

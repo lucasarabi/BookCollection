@@ -65,6 +65,11 @@ namespace BookCollection
 
         private void btnRemoveItem_Click(object sender, EventArgs e)
         {
+            //MessageBox.Show("Item removed from cart.",
+            //       "Removed",
+            //       MessageBoxButtons.OK,
+            //       MessageBoxIcon.Information);
+
             ItemRemoved?.Invoke(this, EventArgs.Empty);
         }
     }

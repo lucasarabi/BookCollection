@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BookCollection.DatabaseClasses.Repositories;
+using BookCollection.ObjectClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,12 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BookCollection.DatabaseClasses.Repositories;
+using BookCollection.ObjectClasses;
 
 namespace BookCollection
 {
     public partial class FormEditRecord : Form
     {
-        public FormEditRecord()
+        private Book? currBook;
+
+        public FormEditRecord(Book b)
         {
             this.StartPosition = FormStartPosition.Manual;
 
@@ -28,71 +34,71 @@ namespace BookCollection
             this.MaximizeBox = false;
 
             InitializeComponent();
+
+            currBook = b;
+                       
+
         }
 
         private void EditRecord_Load(object sender, EventArgs e)
         {
-            //Will be filled with BookObj Info. 
-            titleTextBox.Text = "Test Book Title";
-            isbnTextBox.Text = "1234567890";
-            authorTextBox.Text = "John Doe";
-            PubDatePicker.Text = "01/01/2025";
-            dateAddedTimePicker.Text = "01/02/2025";
-            publisherTextBox.Text = "Test Publisher";
-            numPagesTextBox.Text = "350";
-            bookIDTextBox.Text = "1001";
-            quantTextBox.Text = "5";
-            priceTextBox.Text = "19.99";
-            genreTextBox.Text = "Fiction";
-            bookTypeTextBox.Text = "Paperback";
+            titleTextBox.Text = currBook.Title;
+            isbnTextBox.Text = currBook.ISBN;
+            authorTextBox.Text = currBook.Author;
+            PubDatePicker.Text = currBook.PublishDate.ToString();
+            dateAddedTimePicker.Text = currBook.DateAdded.ToString();
+            publisherTextBox.Text = currBook.Publisher;
+            numPagesTextBox.Text = currBook.NumOfPages.ToString();
+            bookIDTextBox.Text = currBook.BookID;
+            quantTextBox.Text = currBook.quantity.ToString();
+            priceTextBox.Text = currBook.Price.ToString();
+            genreTextBox.Text = currBook.Genre;
+            bookTypeTextBox.Text = currBook.BookType;
         }
+
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(titleTextBox.Text))
-                titleTextBox.Text = "N/A";
+            if (string.IsNullOrWhiteSpace(titleTextBox.Text) ||
+                string.IsNullOrWhiteSpace(isbnTextBox.Text) ||
+                string.IsNullOrWhiteSpace(authorTextBox.Text) ||
+                string.IsNullOrWhiteSpace(publisherTextBox.Text) ||
+                string.IsNullOrWhiteSpace(numPagesTextBox.Text) ||
+                string.IsNullOrWhiteSpace(bookIDTextBox.Text) ||
+                string.IsNullOrWhiteSpace(quantTextBox.Text) ||
+                string.IsNullOrWhiteSpace(priceTextBox.Text) ||
+                string.IsNullOrWhiteSpace(genreTextBox.Text) ||
+                string.IsNullOrWhiteSpace(bookTypeTextBox.Text))
 
-            if (string.IsNullOrWhiteSpace(isbnTextBox.Text))
-                isbnTextBox.Text = "N/A";
+            {
+                MessageBox.Show("Please fill in all required fields.",
+                    "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
 
-            if (string.IsNullOrWhiteSpace(authorTextBox.Text))
-                authorTextBox.Text = "N/A";
+            }
 
-            if (string.IsNullOrWhiteSpace(publisherTextBox.Text))
-                publisherTextBox.Text = "N/A";
+            Book updatedBook = new Book()
+            {
+                Title = titleTextBox.Text,
+                ISBN = isbnTextBox.Text,
+                Author = authorTextBox.Text,
+                PublishDate = DateTime.Parse(PubDatePicker.Text),
+                DateAdded = DateTime.Parse(dateAddedTimePicker.Text),
+                Publisher = publisherTextBox.Text,
+                NumOfPages = int.Parse(numPagesTextBox.Text),
+                BookID = bookIDTextBox.Text,
+                quantity = int.Parse(quantTextBox.Text),
+                Price = decimal.Parse(priceTextBox.Text),
+                Genre = genreTextBox.Text,
+                BookType = bookTypeTextBox.Text
+            };
 
-            if (string.IsNullOrWhiteSpace(numPagesTextBox.Text))
-                numPagesTextBox.Text = "0";
+            MessageBox.Show("Book Edited: " + updatedBook.Title);
 
-            if (string.IsNullOrWhiteSpace(bookIDTextBox.Text))
-                bookIDTextBox.Text = "0";
-
-            if (string.IsNullOrWhiteSpace(quantTextBox.Text))
-                quantTextBox.Text = "0";
-
-            if (string.IsNullOrWhiteSpace(priceTextBox.Text))
-                priceTextBox.Text = "0.00";
-
-            if (string.IsNullOrWhiteSpace(genreTextBox.Text))
-                genreTextBox.Text = "N/A";
-
-            if (string.IsNullOrWhiteSpace(bookTypeTextBox.Text))
-                bookTypeTextBox.Text = "N/A";
-
-            MessageBox.Show("SAVE clicked.\n\n" +
-            $"Title: {titleTextBox.Text}\n" +
-            $"ISBN: {isbnTextBox.Text}\n" +
-            $"Author: {authorTextBox.Text}\n" +
-            $"Publish Date: {PubDatePicker.Value}\n" +
-            $"Date Added: {dateAddedTimePicker.Value}\n" +
-            $"Publisher: {publisherTextBox.Text}\n" +
-            $"Num Pages: {numPagesTextBox.Text}\n" +
-            $"Book ID: {bookIDTextBox.Text}\n" +
-            $"Quantity: {quantTextBox.Text}\n" +
-            $"Price: {priceTextBox.Text}\n" +
-            $"Genre: {genreTextBox.Text}\n" +
-            $"Book Type: {bookTypeTextBox.Text}");
+            BookRepository.Update(updatedBook);
 
             this.Close();
+
+            
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {

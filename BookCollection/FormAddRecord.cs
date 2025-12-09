@@ -1,9 +1,11 @@
-﻿using BookCollection.ObjectClasses;
+﻿using BookCollection.DatabaseClasses.Repositories;
+using BookCollection.ObjectClasses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,105 +18,59 @@ namespace BookCollection
     {
         public FormAddRecord()
         {
-            this.StartPosition = FormStartPosition.Manual;
-
-            int screenW = Screen.PrimaryScreen.WorkingArea.Width;
-            int screenH = Screen.PrimaryScreen.WorkingArea.Height;
-
-            int targetX = (int)(screenW * (2.0 / 3.0));
-            int targetY = screenH / 2 - this.Height;
-
-            this.Location = new Point(targetX, targetY);
-
-            this.StartPosition = FormStartPosition.Manual;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.MaximizeBox = false;
 
             InitializeComponent();
+
+            
         }
 
-        private void AddRecord_Load(object sender, EventArgs e)
-        {
+        private void AddRecord_Load(object sender, EventArgs e){}
 
-        }
         private void saveButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(titleTextBox.Text))
-                titleTextBox.Text = "N/A";
 
-            if (string.IsNullOrWhiteSpace(isbnTextBox.Text))
-                isbnTextBox.Text = "N/A";
+            if (string.IsNullOrWhiteSpace(titleTextBox.Text) ||
+                string.IsNullOrWhiteSpace(isbnTextBox.Text) ||
+                string.IsNullOrWhiteSpace(authorTextBox.Text) ||
+                string.IsNullOrWhiteSpace(publisherTextBox.Text) ||
+                string.IsNullOrWhiteSpace(numPagesTextBox.Text) ||
+                string.IsNullOrWhiteSpace(bookIDTextBox.Text) ||
+                string.IsNullOrWhiteSpace(quantTextBox.Text) ||
+                string.IsNullOrWhiteSpace(priceTextBox.Text) ||
+                string.IsNullOrWhiteSpace(genreTextBox.Text) ||
+                string.IsNullOrWhiteSpace(bookTypeTextBox.Text))
 
-            if (string.IsNullOrWhiteSpace(authorTextBox.Text))
-                authorTextBox.Text = "N/A";
+            {
+                MessageBox.Show("Please fill in all required fields.",
+                    "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
 
-            if (string.IsNullOrWhiteSpace(publisherTextBox.Text))
-                publisherTextBox.Text = "N/A";
+            }
 
-            if (string.IsNullOrWhiteSpace(numPagesTextBox.Text))
-                numPagesTextBox.Text = "0";
-
-            if (string.IsNullOrWhiteSpace(bookIDTextBox.Text))
-                bookIDTextBox.Text = "0";
-
-            if (string.IsNullOrWhiteSpace(quantTextBox.Text))
-                quantTextBox.Text = "0";
-
-            if (string.IsNullOrWhiteSpace(priceTextBox.Text))
-                priceTextBox.Text = "0.00";
-
-            if (string.IsNullOrWhiteSpace(genreTextBox.Text))
-                genreTextBox.Text = "N/A";
-
-            if (string.IsNullOrWhiteSpace(bookTypeTextBox.Text))
-                bookTypeTextBox.Text = "N/A";
-
-            /*
-            
-            MessageBox.Show("SAVE clicked.\n\n" +
-            $"Title: {titleTextBox.Text}\n" +
-            $"ISBN: {isbnTextBox.Text}\n" +
-            $"Author: {authorTextBox.Text}\n" +
-            $"Publish Date: {PubDatePicker.Text}\n" +
-            $"Date Added: {DateAddedTimePicker.Text}\n" +
-            $"Publisher: {publisherTextBox.Text}\n" +
-            $"Num Pages: {numPagesTextBox.Text}\n" +
-            $"Book ID: {bookIDTextBox.Text}\n" +
-            $"Quantity: {quantTextBox.Text}\n" +
-            $"Price: {priceTextBox.Text}\n" +
-            $"Genre: {genreTextBox.Text}\n" +
-            $"Book Type: {bookTypeTextBox.Text}");
-
-            */
-
-            this.Close();
-
-            Book newBook = new Book
+            Book book = new Book()
             {
                 Title = titleTextBox.Text,
                 ISBN = isbnTextBox.Text,
                 Author = authorTextBox.Text,
-                PublishDate = PubDatePicker.Value,
-                DateAdded = DateAddedTimePicker.Value,
+                PublishDate = DateTime.Parse(PubDatePicker.Text),
+                DateAdded = DateTime.Parse(DateAddedTimePicker.Text),
                 Publisher = publisherTextBox.Text,
                 NumOfPages = int.Parse(numPagesTextBox.Text),
                 BookID = bookIDTextBox.Text,
+                quantity = int.Parse(quantTextBox.Text),
                 Price = decimal.Parse(priceTextBox.Text),
                 Genre = genreTextBox.Text,
-                BookType = bookTypeTextBox.Text,
-                quantity = int.Parse(quantTextBox.Text)
-
+                BookType = bookTypeTextBox.Text
             };
 
-            for (int i = 0; i < DummyGlobalInfo.ALL_BOOKS.Count; i++)
-            {
-                if (DummyGlobalInfo.ALL_BOOKS[i].ISBN.Equals(newBook.ISBN))
-                {
-                    DummyGlobalInfo.ALL_BOOKS[i].quantity += newBook.quantity;
-                    return;
-                }
-            }
-            DummyGlobalInfo.ALL_BOOKS.Add(newBook);
-            Close();
+            BookRepository.Add(book);
+
+            MessageBox.Show("Book Saved: " + book.Title);
+
+            this.Close();
+            
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {

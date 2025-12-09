@@ -14,6 +14,7 @@ namespace BookCollection
 {
     public partial class FormAdminBookCollectionManagement : Form
     {
+        List<Book> all_books = new List<Book>();
         public FormAdminBookCollectionManagement()
         {
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -30,16 +31,25 @@ namespace BookCollection
             resultsListView.Columns.Add("Status", -2, HorizontalAlignment.Left);
             resultsListView.Columns.Add("Quantity", 60, HorizontalAlignment.Left);
 
-            LoadBooksFromDummyList();
+            LoadBooks();
 
         }
 
-        private void LoadBooksFromDummyList()
+        private void LoadBooks()
+        {
+            all_books.Clear();
+            all_books = BookRepository.GetAll();
+            UpdateUI();
+        }
+
+        private void UpdateUI()
         {
             resultsListView.Items.Clear();
-            for (int i = 0; i < DummyGlobalInfo.ALL_BOOKS.Count; i++)
+
+
+            for (int i = 0; i < all_books.Count; i++)
             {
-                Book book = DummyGlobalInfo.ALL_BOOKS[i];
+                Book book = all_books[i];
                 ListViewItem item = new ListViewItem(book.Title);
                 item.SubItems.Add(book.BookID);
                 item.SubItems.Add(book.Author);
@@ -60,7 +70,50 @@ namespace BookCollection
 
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            // DATABASE NEEDED
+            string searchText = bookNameTxtBox.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                LoadBooks();
+                return;
+            }
+
+            var sortedBooks = all_books
+                .Select(book => new
+                {
+                    Book = book,
+                    Score = CalculateSimilarity(book, searchText)
+                })
+                .OrderByDescending(x => x.Score)
+                .Where(x => x.Score > 0)
+                .Select(x => x.Book)
+                .ToList();
+
+            UpdateUI();
+        }
+
+        private int CalculateSimilarity(Book book, string searchText)
+        {
+            int score = 0;
+
+            if (book.Title.ToLower() == searchText)
+                score += 1000;
+
+            string[] searchWords = searchText.Split(' ');
+            string[] titleWords = book.Title.ToLower().Split(' ');
+
+            foreach (string searchWord in searchWords)
+            {
+                foreach (string titleWord in titleWords)
+                {
+                    if (titleWord == searchWord)
+                        score += 50;
+                    else if (titleWord.StartsWith(searchWord))
+                        score += 25;
+                }
+            }
+
+            return score;
         }
 
         private void addRecordBtn_Click(object sender, EventArgs e)
@@ -71,8 +124,8 @@ namespace BookCollection
 
         private void editRecordBtn_Click(object sender, EventArgs e)
         {
-            FormEditRecord editRecord = new FormEditRecord();
-            editRecord.ShowDialog();
+            editbookSearch searchForm = new editbookSearch();
+            searchForm.ShowDialog();
         }
 
         private void deleteRecordBtn_Click(object sender, EventArgs e)
@@ -101,14 +154,15 @@ namespace BookCollection
             if (result == DialogResult.Yes)
             {
                 // Find and remove the book from the global list
-                Book? bookToRemove = DummyGlobalInfo.ALL_BOOKS.FirstOrDefault(b => b.BookID == bookID);
+                Book? bookToRemove = all_books.FirstOrDefault(b => b.BookID == bookID);
 
                 if (bookToRemove != null)
                 {
-                    DummyGlobalInfo.ALL_BOOKS.Remove(bookToRemove);
+                    all_books.Remove(bookToRemove);
+                    BookRepository.Delete(bookID);
 
                     // Refresh the ListView
-                    LoadBooksFromDummyList();
+                    LoadBooks();
 
                     MessageBox.Show("Book deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -121,8 +175,11 @@ namespace BookCollection
 
         private void deleteAllRecordsBtn_Click(object sender, EventArgs e)
         {
-            DummyGlobalInfo.ALL_BOOKS.Clear();
-            LoadBooksFromDummyList();
+            foreach (Book book in all_books)
+            {
+                BookRepository.Delete(book.BookID);
+            }
+            LoadBooks();
         }
 
         private void OpenAdminDirectoryButton_Click(object sender, EventArgs e)
