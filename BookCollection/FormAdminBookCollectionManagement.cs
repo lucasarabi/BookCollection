@@ -1,14 +1,15 @@
-﻿using System;
+﻿using BookCollection.DatabaseClasses.Repositories;
+using BookCollection.ObjectClasses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BookCollection.DatabaseClasses.Repositories;
-using BookCollection.ObjectClasses;
 
 namespace BookCollection
 {
@@ -106,7 +107,7 @@ namespace BookCollection
                 .Select(book => new
                 {
                     Book = book,
-                    Score = CalculateSimilarity(book, searchText)
+                    Score = CalculateSimilarity(book)
                 })
                 .OrderByDescending(x => x.Score)
                 .Select(x => x.Book)
@@ -117,30 +118,56 @@ namespace BookCollection
             UpdateUI();
         }
 
-        private int CalculateSimilarity(Book book, string searchText)
+        private int CalculateSimilarity(Book book)
         {
             int score = 0;
 
-            if (book.Title.ToLower() == searchText)
-                score += 1000;
-            else if (book.Title.ToLower().StartsWith(searchText))
-                score += 500;
-            else if (book.Title.ToLower().Contains(searchText))
-                score += 250;
-            if (book.Author.ToLower() == searchText)
-                score += 800;
-            else if (book.Author.ToLower().Contains(searchText))
-                score += 200;
-            if (book.ISBN.ToLower().Contains(searchText))
-                score += 300;
-            if (book.Genre.ToLower().Contains(searchText))
-                score += 100;
-            if (book.Publisher.ToLower().Contains(searchText))
-                score += 100;
-            if (book.BookType.ToLower().Contains(searchText))
-                score += 100;
+            string titleText = bookNameTxtBox.Text.Trim().ToLower();
+            string authorText = authorNameTxtBox.Text.Trim().ToLower();
+            string ISBNText = isbnTxtBox.Text.Trim().ToLower();
+            string bookIDText = bookIdTxtBox.Text.Trim().ToLower();
 
-            string[] searchWords = searchText.Split(' ');
+            if (!string.IsNullOrEmpty(titleText))
+            {
+                if (book.Title.ToLower() == titleText)
+                    score += 1000;
+                else if (book.Title.ToLower().StartsWith(titleText))
+                    score += 500;
+                else if (book.Title.ToLower().Contains(titleText))
+                    score += 250;
+            }
+
+            if (!string.IsNullOrEmpty(authorText))
+            {
+                if (book.Author.ToLower() == authorText)
+                    score += 1000;
+                else if (book.Author.ToLower().StartsWith(authorText))
+                    score += 500;
+                else if (book.Author.ToLower().Contains(authorText))
+                    score += 250;
+            }
+
+            if (!string.IsNullOrEmpty(bookIDText))
+            {
+                if (book.BookID.ToLower() == bookIDText)
+                    score += 1000;
+                else if (book.BookID.ToLower().StartsWith(bookIDText))
+                    score += 500;
+                else if (book.BookID.ToLower().Contains(bookIDText))
+                    score += 250;
+            }
+
+            if (!string.IsNullOrEmpty(ISBNText))
+            {
+                if (book.ISBN.ToLower() == ISBNText)
+                    score += 1000;
+                else if (book.ISBN.ToLower().StartsWith(ISBNText))
+                    score += 500;
+                else if (book.ISBN.ToLower().Contains(ISBNText))
+                    score += 250;
+            }
+
+            string[] searchWords = titleText.Split(' ');
             string[] titleWords = book.Title.ToLower().Split(' ');
 
             foreach (string searchWord in searchWords)
@@ -153,7 +180,7 @@ namespace BookCollection
                         score += 25;
                 }
             }
-
+            Debug.WriteLine($"{book.Title} ====> {score}");
             return score;
         }
 
